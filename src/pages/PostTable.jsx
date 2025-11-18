@@ -1,14 +1,14 @@
 import React from 'react';
+import { Heading, SubText } from '../components/Typography';
 
 const PostsTable = () => {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
       {/* Table Header */}
       <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-        <h2 className="text-lg font-semibold text-gray-800">Posts</h2>
-        <p className="text-sm text-gray-600 mt-1">
-          Community posts and engagement metrics
-        </p>
+      
+        <Heading title="Posts"/>
+        <SubText text="Community posts and engagement metrics"/>
       </div>
 
       {/* Table */}
