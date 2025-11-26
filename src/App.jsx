@@ -38,6 +38,7 @@ import MentionsTable from './pages/MentionTable'
 import TrendingPostsTable from './pages/TrendingPostTable'
 import SearchIndexTable from './pages/SearchIndex'
 import UserSearchHistoryTable from './pages/UserSearchHistoryTable'
+import Login from './pages/auth/Login'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -45,8 +46,9 @@ function App() {
   return (
     <>
       <Routes>
+         <Route path='/' element ={<Login/>}/>
         <Route element = {<SidebarDemo/>}>
-        <Route path='/' element ={<Dashboard/>}/>
+        <Route path='/dashboard' element ={<Dashboard/>}/>
         <Route path='/user' element ={<User/>}/>
         <Route path='/university' element ={<UniversityTable/>}/>
         <Route path='/community' element ={<CommunitiesTable/>}/>

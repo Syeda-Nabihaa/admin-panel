@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Input = ({placeholder}) => {
+const Input = ({placeholder , onChange , type, name}) => {
   return (
     <StyledWrapper>
-      <input className="input" placeholder={placeholder} />
+      <input className="input" placeholder={placeholder} onChange={onChange} type={type} name={name}/>
     </StyledWrapper>
   );
 }
@@ -12,7 +12,7 @@ const Input = ({placeholder}) => {
 const StyledWrapper = styled.div`
   .input {
     border: 2px solid transparent;
-    width: 15em;
+    width: 100%;
     height: 2.5em;
     padding-left: 0.8em;
     outline: none;
