@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Input from "../../components/InputFields";
+import {Input} from "../../components/InputFields";
 import Button from "../../components/Button";
-import AuthService from "../../../../eproject/hotel-management-sysytem/src/services/AuthService";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../../services/AuthService";
 
 export default function Login() {
   const service = new AuthService();
@@ -14,13 +14,16 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData)
   }
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       const res = await service.login(formData);
-      console.log(res);
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("RefreshToken", res.data.refreshToken);
+      console.log(res.data.accessToken)
+      console.log(res.data.refreshToken)
+      console.log(res.data);
 
       alert("login Successful!");
 
@@ -36,7 +39,7 @@ export default function Login() {
         {/* Logo/Header Section */}
         <div className="text-center mb-8">
           <div className="mx-auto w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-4">
-            <span className="text-white font-bold text-xl">L</span>
+            <span className="text-white font-bold text-xl">A</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Welcome Back

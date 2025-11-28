@@ -1,13 +1,25 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-const Input = ({placeholder , onChange , type, name}) => {
+export const Input = ({ placeholder, type, register, name, options }) => {
   return (
     <StyledWrapper>
-      <input className="input" placeholder={placeholder} onChange={onChange} type={type} name={name}/>
+      <input
+        className="input"
+        placeholder={placeholder}
+        type={type}
+        {...(register ? register(name, options) : {})}
+      />
     </StyledWrapper>
   );
-}
+};
+export const FileInput = ({ register, name }) => {
+  return (
+    <StyledWrapper>
+      <input className="input" type="file" {...register(name)} />
+    </StyledWrapper>
+  );
+};
 
 const StyledWrapper = styled.div`
   .input {
@@ -17,16 +29,15 @@ const StyledWrapper = styled.div`
     padding-left: 0.8em;
     outline: none;
     overflow: hidden;
-    background-color: #F3F3F3;
+    background-color: #f3f3f3;
     border-radius: 10px;
     transition: all 0.5s;
   }
 
   .input:hover,
   .input:focus {
-    border: 2px solid #4A9DEC;
+    border: 2px solid #4a9dec;
     box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
     background-color: white;
-  }`;
-
-export default Input;
+  }
+`;

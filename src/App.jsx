@@ -5,8 +5,7 @@ import './App.css'
 import { SidebarDemo } from './components/Sidebar'
 import { Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
-import User from './pages/User'
-import UniversityTable from './pages/UniversityTable'
+import User from './pages/users/User'
 import CommunitiesTable from './pages/community/CommunityTable'
 import AddCommunityForm from './pages/community/AddCommunity'
 import StudentVerificationTable from './pages/Student-verificationTable'
@@ -39,6 +38,9 @@ import TrendingPostsTable from './pages/TrendingPostTable'
 import SearchIndexTable from './pages/SearchIndex'
 import UserSearchHistoryTable from './pages/UserSearchHistoryTable'
 import Login from './pages/auth/Login'
+import UniversityTable from './pages/University/UniversityTable'
+import AddUniversity from './pages/University/AddUniversity'
+import Adduser from './pages/users/Adduser'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -50,7 +52,9 @@ function App() {
         <Route element = {<SidebarDemo/>}>
         <Route path='/dashboard' element ={<Dashboard/>}/>
         <Route path='/user' element ={<User/>}/>
+        <Route path='/adduser' element ={<Adduser/>}/>
         <Route path='/university' element ={<UniversityTable/>}/>
+        <Route path='/adduniversity' element ={<AddUniversity/>}/>
         <Route path='/community' element ={<CommunitiesTable/>}/>
         <Route path='/addcommunity' element ={<AddCommunityForm/>}/>
         <Route path='/student' element ={<StudentVerificationTable/>}/>

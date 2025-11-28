@@ -1,3 +1,4 @@
+import axios from "axios";
 import { AllApiEndPoints } from "./ApiUrl";
 
 export class AuthService{
