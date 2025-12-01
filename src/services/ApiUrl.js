@@ -1,7 +1,7 @@
 import { environment } from "../environment/environment";
 
 export const AllApiEndPoints = {
-login: `${environment.baseUrl}auth/auth/login`,
+login: `${environment.baseUrl}auth/login`,
 
 //---------------------- UNIVERSITY -----------------------------------
 university: `${environment.baseUrl}univeristy`,

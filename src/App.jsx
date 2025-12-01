@@ -53,8 +53,13 @@ function App() {
         <Route path='/dashboard' element ={<Dashboard/>}/>
         <Route path='/user' element ={<User/>}/>
         <Route path='/adduser' element ={<Adduser/>}/>
+
+
         <Route path='/university' element ={<UniversityTable/>}/>
         <Route path='/adduniversity' element ={<AddUniversity/>}/>
+        <Route path='/edituniversity/:id' element ={<AddUniversity/>}/>
+
+
         <Route path='/community' element ={<CommunitiesTable/>}/>
         <Route path='/addcommunity' element ={<AddCommunityForm/>}/>
         <Route path='/student' element ={<StudentVerificationTable/>}/>

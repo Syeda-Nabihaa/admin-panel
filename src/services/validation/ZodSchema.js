@@ -1,5 +1,8 @@
 import { z } from "zod";
-
+export const loginSchema = z.object({
+  email: z.string().email().min(4, "Email is required"),
+  password: z.string().min(7, "Password is required"),
+});
 export const addUniversitySchema = z
   .object({
     name: z.string().trim().min(1, "Please Enter University Name"),
@@ -39,8 +42,7 @@ export const addUserSchema = z
       .regex(/[a-z]/, "Must include a lowercase letter")
       .regex(/\d/, "Must include a number")
       .regex(/[!@#$%^&*]/, "Must include a special character"),
-    confirmPassword: z
-      .string(),
+    confirmPassword: z.string(),
     role: z.string().min(3, "Role is required"),
     avatarUrl: z.string().min(1, "logo URL is required"),
   })
@@ -48,3 +50,15 @@ export const addUserSchema = z
     message: "Passwords must match",
     path: ["confirmPassword"],
   });
+
+  
+export const updateUniversitySchema = z.object({
+  email: z.string().email(),
+  role: z.string(),
+  name: z.string(),
+  logo: z.string(),
+  domain: z.string(),
+  location: z.string(),
+  totalStudents: z.number(),
+  verifiedUsers: z.number(),
+});

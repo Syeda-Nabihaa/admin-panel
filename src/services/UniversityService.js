@@ -6,12 +6,7 @@ export class UnversityService {
     try {
       const response = await axiosInstance.post(
         AllApiEndPoints.university,
-        body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        body
       );
       return response.data;
     } catch (error) {
@@ -21,8 +16,33 @@ export class UnversityService {
   }
   async GetAllUniversity() {
     try {
+      const response = await axiosInstance.get(AllApiEndPoints.university);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error("University cannot add add:", error);
+      throw error;
+    }
+  }
+
+  async getUniversitybyiD(id) {
+    try {
       const response = await axiosInstance.get(
-        AllApiEndPoints.university
+        `${AllApiEndPoints.university}/${id}`
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error("University cannot add add:", error);
+      throw error;
+    }
+  }
+
+  async updateUniversity(body , id) {
+    try {
+      const response = await axiosInstance.put(
+        `${AllApiEndPoints.university}/${id}`,
+        body
       );
       console.log(response);
       return response.data;

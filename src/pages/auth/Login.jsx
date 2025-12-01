@@ -1,35 +1,44 @@
 import { useState } from "react";
-import {Input} from "../../components/InputFields";
+import { Input } from "../../components/InputFields";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
+import { useForm } from "react-hook-form";
+import { loginSchema } from "../../services/validation/ZodSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Helper from "../../helper/Helper";
 
 export default function Login() {
   const service = new AuthService();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onChange",
   });
+
   const [isLoading, setIsLoading] = useState(false);
-  function handleChange(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const helpers = new Helper();
+  async function handlesubmit(formData) {
+    setIsLoading(true);
     try {
       const res = await service.login(formData);
-      localStorage.setItem("accessToken", res.data.accessToken);
-      localStorage.setItem("RefreshToken", res.data.refreshToken);
-      console.log(res.data.accessToken)
-      console.log(res.data.refreshToken)
-      console.log(res.data);
+      helpers.setToken(res.data.accessToken, res.data.refreshToken);
 
-      alert("login Successful!");
-
+      alert("Login Successful!");
       navigate("/dashboard");
     } catch (error) {
-      alert(error.response?.data?.message || "Something went wrong");
+      alert(error.response?.data?.message || "Login failed");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -49,24 +58,28 @@ export default function Login() {
 
         {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(handlesubmit)}>
             <div className="space-y-6">
               <Input
+                register={register}
                 name="email"
                 type="email"
                 placeholder="Enter your email"
-                label="Email Address"
-                onChange={handleChange}
-                required
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
               <Input
+                register={register}
                 name="password"
                 type="password"
                 placeholder="Enter your password"
-                label="Password"
-                onChange={handleChange}
-                required
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             {/* Remember Me & Forgot Password */}

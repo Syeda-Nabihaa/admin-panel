@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Heading, SubText } from "../../components/Typography";
-import Button from "../../components/Button";
+import Button, { ActionButtons } from "../../components/Button";
 import { useEffect, useState } from "react";
 import { UnversityService } from "../../services/UniversityService";
 
@@ -57,10 +57,13 @@ const UniversityTable = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Verified Users
               </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-          {university.map((u) => (
+          <tbody className="bg-white divide-y divide-gray-200">
+            {university.map((u) => (
               <tr className="hover:bg-gray-50 transition-colors duration-150">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
@@ -78,16 +81,13 @@ const UniversityTable = () => {
                     </div>
                   </div>
                 </td>
-              
 
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{u.user.email}</div>
                 </td>
-             
+
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {u.domain}
-                  </div>
+                  <div className="text-sm text-gray-900">{u.domain}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{u.location}</div>
@@ -98,11 +98,19 @@ const UniversityTable = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{u.verifiedUsers}</div>
                 </td>
-              </tr>
 
-            
-))}
-            </tbody>
+                <td className="p-4">
+                  <div className="flex justify-center space-x-2 ">
+                    <ActionButtons
+                      editLink={`/edituniversity/${u.id}`}
+                      viewLink={`/university/${u.id}`}
+                      onDelete={() => deleteBrand(u.id)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>

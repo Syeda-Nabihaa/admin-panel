@@ -1,26 +1,26 @@
-import axios  from "axios";
+import axios from "axios";
 import { environment } from "../../environment/environment";
 import Helper from "../../helper/Helper";
-
 
 const helpers = new Helper();
 
 const axiosInstance = axios.create({
-    baseURL: environment.baseUrl,
+  baseURL: environment.baseUrl,
 });
-
 axiosInstance.interceptors.request.use(
-    (config)=> {
-        const token = helpers.getToken();
-        if(token){
-            config.headers.Authorization = `Bearer ${token}`
-            config.headers.Accept = 'application/json'
+  (config) => {
+    const { accessToken } = helpers.getToken() || {};
 
-        }
-        return config;
-    },
-    (error)=>{
-        return Promise.reject(error);
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.Accept = "application/json";
     }
-)
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;
