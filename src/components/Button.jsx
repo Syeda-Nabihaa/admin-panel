@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const Button = ({ title }) => {
+function Button({ title, onClick }) {
   return (
     <StyledWrapper>
-      <button type="submit">{title}</button>
+      <button type="submit" onClick={onClick}>
+        {title}
+      </button>
     </StyledWrapper>
   );
-};
+}
 
 const StyledWrapper = styled.div`
   button {
@@ -43,9 +45,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default Button;
-
-export function ActionButtons({ viewLink, editLink, onDelete }) {
+function ActionButtons({ viewLink, editLink, onDelete }) {
   return (
     <div className="flex space-x-3 ">
       {viewLink && (
@@ -70,3 +70,5 @@ export function ActionButtons({ viewLink, editLink, onDelete }) {
     </div>
   );
 }
+
+export { Button, ActionButtons };

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Heading, SubText } from "../../components/Typography";
-import Button, { ActionButtons } from "../../components/Button";
+import {Button, ActionButtons } from "../../components/Button";
 import { useEffect, useState } from "react";
 import { UnversityService } from "../../services/UniversityService";
 
@@ -104,7 +104,7 @@ const UniversityTable = () => {
                     <ActionButtons
                       editLink={`/edituniversity/${u.id}`}
                       viewLink={`/university/${u.id}`}
-                      onDelete={() => deleteBrand(u.id)}
+                    
                     />
                   </div>
                 </td>

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Input } from "../../components/InputFields";
-import Button from "../../components/Button";
+// import {Button} from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "../../services/validation/ZodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Helper from "../../helper/Helper";
+import { Button } from "../../components/Button";
 
 export default function Login() {
   const service = new AuthService();
@@ -102,10 +103,8 @@ export default function Login() {
 
             {/* Login Button */}
             <Button
-              type="submit"
               title={isLoading ? "Signing in..." : "Sign in"}
-              disabled={isLoading}
-              className="w-full"
+         
             />
 
             {/* Sign Up Link */}

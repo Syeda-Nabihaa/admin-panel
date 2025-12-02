@@ -41,6 +41,7 @@ import Login from './pages/auth/Login'
 import UniversityTable from './pages/University/UniversityTable'
 import AddUniversity from './pages/University/AddUniversity'
 import Adduser from './pages/users/Adduser'
+import ViewUniversity from './pages/University/ViewUniversity'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -58,6 +59,7 @@ function App() {
         <Route path='/university' element ={<UniversityTable/>}/>
         <Route path='/adduniversity' element ={<AddUniversity/>}/>
         <Route path='/edituniversity/:id' element ={<AddUniversity/>}/>
+        <Route path='/university/:id' element ={<ViewUniversity/>}/>
 
 
         <Route path='/community' element ={<CommunitiesTable/>}/>

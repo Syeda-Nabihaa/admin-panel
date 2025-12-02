@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "../../components/InputFields";
-import Button from "../../components/Button";
+import { Button } from "../../components/Button";
 import { Heading, SubText } from "../../components/Typography";
 import { Link } from "react-router-dom";
 import { UserService } from "../../services/UserService";
@@ -12,10 +12,11 @@ export default function User() {
   async function getAllData() {
     try {
       const res = await service.getAlluser();
-      setUser(res.data);
-      console.log(res.data);
+      setUser(res?.data?.users);
+
+      console.log("res.data.user", res?.data?.users);
     } catch (error) {
-      console.log(error.msg);
+      console.log(error);
     }
   }
   useEffect(() => {
@@ -56,33 +57,40 @@ export default function User() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            <tr className="hover:bg-gray-50 transition-colors duration-150">
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 h-10 w-10">
-                    <img
-                      className="h-10 w-10 rounded-full object-cover border border-gray-200"
-                      src="https://via.placeholder.com/40"
-                      alt="University logo"
-                    />
-                  </div>
-                  <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">
-                      uni@gmail.com
+            {Array.isArray(user) && user.length > 0 ? (
+              user.map((u) => (
+                <tr
+                  key={u.id}
+                  className="hover:bg-gray-50 transition-colors duration-150"
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{u.email}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {u.userDetail[0]?.first_name}
                     </div>
-                  </div>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">abc</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">xyz</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">Student</div>
-              </td>
-            </tr>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {u.userDetail[0]?.last_name}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{u.role}</div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="4"
+                  className="px-6 py-4 text-center text-sm text-gray-500"
+                >
+                  No users found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heading, SubText } from '../../components/Typography';
-import Button from '../../components/Button';
+import {Button} from '../../components/Button';
 import { Link } from 'react-router-dom';
 
 const CommunitiesTable = () => {

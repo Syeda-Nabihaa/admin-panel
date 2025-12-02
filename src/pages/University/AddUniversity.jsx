@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../components/Button";
+import {Button} from "../../components/Button";
 import { Input, FileInput } from "../../components/InputFields";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
@@ -20,6 +20,7 @@ const AddUniversity = () => {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(id ? updateUniversitySchema : addUniversitySchema),
@@ -28,7 +29,6 @@ const AddUniversity = () => {
 
       password: "",
       confirmPassword: "",
-      role: "",
       name: "",
       logo: `${environment.baseUrl}abc.jpg`,
       domain: "",
@@ -38,7 +38,7 @@ const AddUniversity = () => {
     },
     mode: "onChange",
   });
-
+  console.log(getValues());
   useEffect(() => {
     console.log("Form errors:", errors);
   }, [errors]);
@@ -64,7 +64,9 @@ const AddUniversity = () => {
   }
 
   useEffect(() => {
-    getUniversitybyid(id);
+    if (id) {
+      getUniversitybyid(id);
+    }
   }, [id, reset]);
 
   async function submit(data) {
@@ -73,6 +75,7 @@ const AddUniversity = () => {
         const response = await service.updateUniversity(data, id);
         if (response.success === true) {
           console.log("update university", response);
+          navigate("/university")
         } else {
           console.log("error updating university", response);
         }
@@ -118,10 +121,12 @@ const AddUniversity = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email *
               </label>
+
               <Input
                 register={register}
                 name="email"
                 type="email"
+                id={id}
                 placeholder="Enter Email"
               />
               {errors.email && (
@@ -129,7 +134,7 @@ const AddUniversity = () => {
               )}
             </div>
           </div>
-          {!id ? (
+          {!id && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -165,44 +170,23 @@ const AddUniversity = () => {
                 )}
               </div>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Role*
-                </label>
-                <Input
-                  register={register}
-                  name="role"
-                  type="text"
-                  placeholder="Enter Role"
-                />
-                {errors.role && (
-                  <p className="text-red-500 text-sm">{errors.role.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  University Domain *
-                </label>
-                <Input
-                  register={register}
-                  name="domain"
-                  type="text"
-                  placeholder="Enter University Domain"
-                />
-                {errors.domain && (
-                  <p className="text-red-500 text-sm">
-                    {errors.domain.message}
-                  </p>
-                )}
-              </div>
-            </div>
           )}
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                University Domain *
+              </label>
+              <Input
+                register={register}
+                name="domain"
+                type="text"
+                placeholder="Enter University Domain"
+              />
+              {errors.domain && (
+                <p className="text-red-500 text-sm">{errors.domain.message}</p>
+              )}
+            </div>
+             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Location*
               </label>
@@ -218,6 +202,10 @@ const AddUniversity = () => {
                 </p>
               )}
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+           
 
             {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">

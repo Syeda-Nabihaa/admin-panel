@@ -18,7 +18,7 @@ export const addUniversitySchema = z
       .string()
       .min(6, "Confirm password must be at least 6 characters"),
     domain: z.string().optional(),
-    role: z.string().min(3, "Role is required"),
+   
     totalStudents: z.number().int("Must be an integer").min(0, "Must be ≥ 0"),
     verifiedUsers: z.number().int("Must be an integer").min(0, "Must be ≥ 0"),
     location: z.string().min(1, "Location is required"),
@@ -53,8 +53,7 @@ export const addUserSchema = z
 
   
 export const updateUniversitySchema = z.object({
-  email: z.string().email(),
-  role: z.string(),
+ 
   name: z.string(),
   logo: z.string(),
   domain: z.string(),

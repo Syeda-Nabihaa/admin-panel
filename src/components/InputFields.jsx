@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-export const Input = ({ placeholder, type, register, name, options }) => {
+export const Input = ({ placeholder, type, register, name, options, id }) => {
   return (
     <StyledWrapper>
       <input
+        readOnly={!!id}
         className="input"
         placeholder={placeholder}
         type={type}
