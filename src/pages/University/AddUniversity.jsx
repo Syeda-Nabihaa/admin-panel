@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Button} from "../../components/Button";
+import { Button } from "../../components/Button";
 import { Input, FileInput } from "../../components/InputFields";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
@@ -11,6 +11,7 @@ import {
 import { environment } from "../../environment/environment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Heading, SubText } from "../../components/Typography";
+import ImageUploadField from "../../components/ImageUploadField";
 
 const AddUniversity = () => {
   const service = new UnversityService();
@@ -21,6 +22,7 @@ const AddUniversity = () => {
     handleSubmit,
     reset,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(id ? updateUniversitySchema : addUniversitySchema),
@@ -30,7 +32,7 @@ const AddUniversity = () => {
       password: "",
       confirmPassword: "",
       name: "",
-      logo: `${environment.baseUrl}abc.jpg`,
+      logo: "",
       domain: "",
       location: "",
       totalStudents: 0,
@@ -75,7 +77,7 @@ const AddUniversity = () => {
         const response = await service.updateUniversity(data, id);
         if (response.success === true) {
           console.log("update university", response);
-          navigate("/university")
+          navigate("/university");
         } else {
           console.log("error updating university", response);
         }
@@ -186,7 +188,7 @@ const AddUniversity = () => {
                 <p className="text-red-500 text-sm">{errors.domain.message}</p>
               )}
             </div>
-             <div>
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Location*
               </label>
@@ -202,11 +204,28 @@ const AddUniversity = () => {
                 </p>
               )}
             </div>
+
+            <div>
+              <ImageUploadField
+                name="logo"
+                label="Upload Logo"
+                folder="university" // OR whatever folder you store logos in
+               
+                errors={errors}
+                defaultimage={getValues("logo")} // show previous logo if editing
+                onUploadSuccess={(url) => {
+                  setValue("logo", url);
+                  console.log(getValues("logo"));
+                }}
+              />
+
+              {errors.logo && (
+                <p className="text-red-500 text-sm">{errors.logo.message}</p>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-           
-
             {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 logo *

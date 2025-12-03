@@ -70,7 +70,7 @@ const UniversityTable = () => {
                     <div className="flex-shrink-0 h-10 w-10">
                       <img
                         className="h-10 w-10 rounded-full object-cover border border-gray-200"
-                        src="https://via.placeholder.com/40"
+                        src={u.logo}
                         alt="University logo"
                       />
                     </div>
