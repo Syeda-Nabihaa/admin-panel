@@ -12,5 +12,8 @@ addUsers :`${environment.baseUrl}auth/admin/signUp`,
 getUsers :`${environment.baseUrl}user`,
 
 //---------------------- Upload --------------------------------------
-upload :`${environment.baseUrl}media/upload`
+upload :`${environment.baseUrl}media/upload`,
+
+//---------------------- Badge -------------------------------------
+badge:`${environment.baseUrl}badge`
 }

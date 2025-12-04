@@ -18,7 +18,7 @@ export const addUniversitySchema = z
       .string()
       .min(6, "Confirm password must be at least 6 characters"),
     domain: z.string().optional(),
-   
+
     totalStudents: z.number().int("Must be an integer").min(0, "Must be ≥ 0"),
     verifiedUsers: z.number().int("Must be an integer").min(0, "Must be ≥ 0"),
     location: z.string().min(1, "Location is required"),
@@ -51,13 +51,17 @@ export const addUserSchema = z
     path: ["confirmPassword"],
   });
 
-  
 export const updateUniversitySchema = z.object({
- 
   name: z.string(),
   logo: z.string(),
   domain: z.string(),
   location: z.string(),
   totalStudents: z.number(),
   verifiedUsers: z.number(),
+});
+
+export const addUniBadge = z.object({
+  badge_name: z.string().min(1, "Badge name is required"),
+  condition_date: z.string(),
+  badge_url: z.string().min(1, "logo URL is required"),
 });

@@ -1,4 +1,4 @@
-/* Slim scrollbar for sidebar */
+Slim scrollbar for sidebar
 .sidebar-scroll {
   scrollbar-width: thin;         /* Firefox */
   scrollbar-color: #4b5563 #1f2937; /* thumb + track colors */

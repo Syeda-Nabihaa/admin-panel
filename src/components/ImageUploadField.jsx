@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AllApiEndPoints } from "../services/ApiUrl";
 import { motion } from "framer-motion";
 import axios from "axios";
+import axiosInstance from "../services/interceptor/interceptor";
 
 export default function ImageUploadField({
   name,
@@ -36,7 +37,7 @@ export default function ImageUploadField({
 
     try {
       setUploading(true);
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${AllApiEndPoints.upload}?folder=${folder}`,
         formData,
         {

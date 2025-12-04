@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import { UnversityService } from "../../services/UniversityService";
 import { Link, useParams } from "react-router-dom";
 import { Heading, SubText } from "../../components/Typography";
-import {Button} from "../../components/Button";
+import { Button } from "../../components/Button";
+import { IoIosContact } from "react-icons/io";
+import { MdOutlineMail } from "react-icons/md";
+import { IoLocationOutline } from "react-icons/io5";
+import { AddBadgeModal } from "../../components/Modal";
 
 export default function ViewUniversity() {
   const [university, setUniversity] = useState(null);
   const service = new UnversityService();
   const [loading, setloading] = useState(true);
+    const [openModal, setOpenModal] = useState(false);
+
   const { id } = useParams();
   async function getUniByid(id) {
     try {
@@ -22,6 +28,12 @@ export default function ViewUniversity() {
   useEffect(() => {
     getUniByid(id);
   }, [id]);
+  
+  const handleAddBadge = (data) => {
+    console.log("Badge Added:", data);
+
+    // API call here...
+  };
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
       {loading ? (
@@ -57,19 +69,7 @@ export default function ViewUniversity() {
               <div className="space-y-6">
                 <div className="bg-gray-50 rounded-lg p-5">
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                    <svg
-                      className="w-5 h-5 mr-2 text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
+                    <IoIosContact />
                     Contact Information
                   </h3>
                   <div className="space-y-4">
@@ -78,14 +78,7 @@ export default function ViewUniversity() {
                         Email Address
                       </label>
                       <div className="flex items-center text-gray-900">
-                        <svg
-                          className="w-4 h-4 mr-2 text-gray-400"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                        </svg>
+                        <MdOutlineMail />
                         <a
                           href={`mailto:${university.user?.email}`}
                           className="hover:text-blue-600 hover:underline"
@@ -122,25 +115,7 @@ export default function ViewUniversity() {
               <div className="space-y-6">
                 <div className="bg-gray-50 rounded-lg p-5">
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                    <svg
-                      className="w-5 h-5 mr-2 text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
+                    <IoLocationOutline />
                     Campus Information
                   </h3>
                   <div className="space-y-4">
@@ -149,25 +124,8 @@ export default function ViewUniversity() {
                         Location
                       </label>
                       <div className="flex items-center text-gray-900">
-                        <svg
-                          className="w-4 h-4 mr-2 text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
+                        <IoLocationOutline />
+
                         <span>
                           {university.location || "Location not specified"}
                         </span>
@@ -235,11 +193,17 @@ export default function ViewUniversity() {
 
             {/* Action Buttons */}
             <div className="mt-8 pt-6 border-t border-gray-200 flex space-x-4">
-                <Link to={`/edituniversity/${university.id}`}>
+              <Link to={`/edituniversity/${university.id}`}>
                 <Button title="Edit" />
-                </Link>
-                    
-           
+              </Link>
+
+              <Button title="Add badge"   onClick={() => setOpenModal(true)} />
+                 <AddBadgeModal
+                 id={id}
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        onSubmit={handleAddBadge}
+      />
             </div>
           </div>
         </>
@@ -272,3 +236,5 @@ export default function ViewUniversity() {
     </div>
   );
 }
+
+
