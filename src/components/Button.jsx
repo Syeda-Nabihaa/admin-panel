@@ -45,7 +45,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-function ActionButtons({ viewLink, editLink, onDelete }) {
+function ActionButtons({ viewLink, editLink, onDelete , className }) {
   return (
     <div className="flex space-x-3 ">
       {viewLink && (
@@ -56,7 +56,7 @@ function ActionButtons({ viewLink, editLink, onDelete }) {
         </Link>
       )}
       {editLink && (
-        <Link to={editLink} className="text-green-500 hover:text-green-700">
+        <Link to={editLink} className={`${className} text-green-500 hover:text-green-700`}>
           <button>
             <FaEdit className="w-5 h-5" />
           </button>

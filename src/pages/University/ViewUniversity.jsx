@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UnversityService } from "../../services/UniversityService";
 import { Link, useParams } from "react-router-dom";
 import { Heading, SubText } from "../../components/Typography";
-import { Button } from "../../components/Button";
+import { ActionButtons, Button } from "../../components/Button";
 import { IoIosContact } from "react-icons/io";
 import { MdOutlineMail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
@@ -12,7 +12,7 @@ export default function ViewUniversity() {
   const [university, setUniversity] = useState(null);
   const service = new UnversityService();
   const [loading, setloading] = useState(true);
-    const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const { id } = useParams();
   async function getUniByid(id) {
@@ -28,7 +28,7 @@ export default function ViewUniversity() {
   useEffect(() => {
     getUniByid(id);
   }, [id]);
-  
+
   const handleAddBadge = (data) => {
     console.log("Badge Added:", data);
 
@@ -46,7 +46,7 @@ export default function ViewUniversity() {
       ) : university ? (
         <>
           {/* Header */}
-          <div className="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+          <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-r from-gray-50 to-white">
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">
@@ -190,6 +190,40 @@ export default function ViewUniversity() {
                 </div>
               </div>
             </div>
+            <div className="p-6 bg-gray-50 mt-5">
+              <Heading title="All Badges" />
+
+              <div className="flex gap-5 mt-6">
+                {university.badges?.map((b, i) => (
+                  <div className="bg-white rounded-xl shadow-md p-4  hover:shadow-lg transition">
+                    <img
+                      src={b.badge_url}
+                      alt="badge"
+                      className="w-20 h-20 object-contain mx-auto"
+                    />
+
+                    <div className="flex-1 text-center">
+                      <p className="font-semibold text-gray-800 text-lg">
+                        {b.badge_name}
+                      </p>
+                      <div className="flex justify-between">
+                        <p className="text-gray-500 text-sm ">
+                        {b.condition_date}
+                      </p>
+                       <ActionButtons
+                      className="mx-auto"
+                      editLink={`/edituniversity`}
+                   
+                    />
+                      </div>
+                    
+                    </div>
+
+                   
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Action Buttons */}
             <div className="mt-8 pt-6 border-t border-gray-200 flex space-x-4">
@@ -197,13 +231,13 @@ export default function ViewUniversity() {
                 <Button title="Edit" />
               </Link>
 
-              <Button title="Add badge"   onClick={() => setOpenModal(true)} />
-                 <AddBadgeModal
-                 id={id}
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onSubmit={handleAddBadge}
-      />
+              <Button title="Add badge" onClick={() => setOpenModal(true)} />
+              <AddBadgeModal
+                id={id}
+                open={openModal}
+                onClose={() => setOpenModal(false)}
+                onSubmit={handleAddBadge}
+              />
             </div>
           </div>
         </>
@@ -236,5 +270,3 @@ export default function ViewUniversity() {
     </div>
   );
 }
-
-

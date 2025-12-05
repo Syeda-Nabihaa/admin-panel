@@ -32,6 +32,8 @@ export default function Login() {
     setIsLoading(true);
     try {
       const res = await service.login(formData);
+      console.log("ssjss",res);
+      
       helpers.setToken(res.data.accessToken, res.data.refreshToken);
 
       alert("Login Successful!");
