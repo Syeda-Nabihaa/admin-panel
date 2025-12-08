@@ -1,19 +1,31 @@
 import { Link } from "react-router-dom";
 import { Heading, SubText } from "../../components/Typography";
-import {Button, ActionButtons } from "../../components/Button";
+import { Button, ActionButtons } from "../../components/Button";
 import { useEffect, useState } from "react";
 import { UnversityService } from "../../services/UniversityService";
+import { useApi } from "../../helper/UseApi";
 
 const UniversityTable = () => {
   const service = new UnversityService();
   const [university, setUniversity] = useState([]);
+  const { request, loading, error } = useApi(service);
+
   async function getAlldata() {
-    try {
-      const res = await service.GetAllUniversity();
-      console.log("dataaaaa", res.data.data);
-      setUniversity(res.data.data);
-    } catch (error) {
-      console.log(error.message);
+    // try {
+    //   const res = await service.GetAllUniversity();
+    //   console.log("dataaaaa", res.data.data);
+    //   setUniversity(res.data.data);
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
+    const data = await request("GetAllUniversity");
+    if (data) {
+      setUniversity(data.data);
+      loading
+    }
+
+    if (error) {
+      console.log(error);
     }
   }
   useEffect(() => {
@@ -104,7 +116,6 @@ const UniversityTable = () => {
                     <ActionButtons
                       editLink={`/edituniversity/${u.id}`}
                       viewLink={`/university/${u.id}`}
-                    
                     />
                   </div>
                 </td>

@@ -1,54 +1,36 @@
 import { AllApiEndPoints } from "./ApiUrl";
+import BaseService from "./BaseService";
 import axiosInstance from "./interceptor/interceptor";
 
 export class BadgeService {
   async addBadge(body) {
-    try {
-      const response = await axiosInstance.post(
-        AllApiEndPoints.badge,
-        body
-      );
-      return response.data;
-    } catch (error) {
-      console.error("badge cannot add add:", error);
-      throw error;
-    }
+    return await BaseService.post(
+      AllApiEndPoints.badge,
+      body,
+      "Cannnot Add Badge"
+    );
   }
   async GetAllbadge() {
-    try {
-      const response = await axiosInstance.get(AllApiEndPoints.badge);
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      console.error("badge cannot add add:", error);
-      throw error;
-    }
+    return await BaseService.get(
+      AllApiEndPoints.badge,
+
+      "Cannnot fetch Badge"
+    );
   }
 
   async getbadgebyiD(id) {
-    try {
-      const response = await axiosInstance.get(
-        `${AllApiEndPoints.badge}/${id}`
-      );
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      console.error("badge cannot add add:", error);
-      throw error;
-    }
-  }
+    return await BaseService.post(
+      `${AllApiEndPoints.badge}/${id}`,
 
-  async updatebadge(body , id) {
-    try {
-      const response = await axiosInstance.put(
-        `${AllApiEndPoints.badge}/${id}`,
-        body
-      );
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      console.error("badge cannot add add:", error);
-      throw error;
-    }
+      "Cannnot fetch Badge"
+    );
+  }
+  // BadgeService.js
+  async updatebadge(id, body) {
+    return await BaseService.put(
+      `${AllApiEndPoints.badge}/${id}`,
+      body,
+      "Cannnot Add Badge"
+    );
   }
 }

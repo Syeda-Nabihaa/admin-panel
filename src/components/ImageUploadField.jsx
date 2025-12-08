@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AllApiEndPoints } from "../services/ApiUrl";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -16,11 +16,18 @@ export default function ImageUploadField({
   onUploadSuccess,
   folder,
   onUploadError,
-  defaultimage = null,
+  defaultimage = null, // This should update when editing different badges
   ...rest
 }) {
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(defaultimage);
+
+  // Add useEffect to update preview when defaultimage changes
+  useEffect(() => {
+    if (defaultimage !== preview) {
+      setPreview(defaultimage);
+    }
+  }, [defaultimage]); // Add this useEffect
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -50,11 +57,24 @@ export default function ImageUploadField({
       const fileUrl = res.data?.url;
 
       if (fileUrl && onUploadSuccess) {
-        onUploadSuccess(fileUrl); // This will update the form field via setValue
+        onUploadSuccess(fileUrl);
       }
     } catch (err) {
       setUploading(false);
       if (onUploadError) onUploadError(err);
+    }
+  };
+
+  // Add function to remove image
+  const handleRemoveImage = () => {
+    setPreview("");
+    if (onUploadSuccess) {
+      onUploadSuccess(""); // Clear the value in form
+    }
+    // Also clear the file input
+    const fileInput = document.getElementById(name);
+    if (fileInput) {
+      fileInput.value = "";
     }
   };
 
@@ -67,6 +87,30 @@ export default function ImageUploadField({
         >
           {label}
         </label>
+      )}
+
+      {/* Show preview if exists */}
+      {preview && (
+        <div className="mb-3 relative">
+          <div className="inline-block relative">
+            <img
+              src={preview}
+              alt="Badge Preview"
+              className="h-32 w-32 object-contain rounded-lg border border-gray-300"
+            />
+            <button
+              type="button"
+              onClick={handleRemoveImage}
+              className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transform -translate-y-1/2 translate-x-1/2"
+              title="Remove image"
+            >
+              ×
+            </button>
+          </div>
+          {uploading && (
+            <span className="ml-3 text-sm text-blue-600">Uploading...</span>
+          )}
+        </div>
       )}
 
       <div
@@ -82,16 +126,16 @@ export default function ImageUploadField({
           </div>
         )}
 
-        {/* Remove register from input since we handle it manually */}
+        {/* File input */}
         <input
           type="file"
-          accept="image/*" // Changed from {folder} to "image/*"
+          accept="image/*"
           id={name}
           name={name}
           {...(register ? register(name, validation) : {})}
           className="block w-full py-2 focus:outline-none"
           style={{ border: "none", padding: "12px 4px" }}
-          onChange={handleFileChange} // Use custom handler
+          onChange={handleFileChange}
           {...rest}
         />
 
@@ -105,20 +149,7 @@ export default function ImageUploadField({
         )}
       </div>
 
-      {/* Preview Section */}
-      {preview && (
-        <div className="mt-3 flex items-center space-x-4">
-          <img
-            src={preview}
-            alt="Preview"
-            className="h-24 w-24 object-cover rounded-lg border"
-          />
-          {uploading && (
-            <span className="text-sm text-blue-600">Uploading...</span>
-          )}
-        </div>
-      )}
-
+      {/* Uploading indicator */}
       {!preview && uploading && (
         <motion.p
           className="mt-1 text-sm text-blue-600"
@@ -129,7 +160,14 @@ export default function ImageUploadField({
         </motion.p>
       )}
 
-      {/* Hidden input for react-hook-form validation (optional) */}
+      {/* Helper text */}
+      {!preview && !uploading && (
+        <p className="mt-1 text-sm text-gray-500">
+          {defaultimage ? "Click to change image" : "Click to upload image"}
+        </p>
+      )}
+
+      {/* Hidden input for react-hook-form validation */}
       <input type="hidden" {...(register ? register(name, validation) : {})} />
 
       {errors?.[name] && (

@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (err) {
         TokenService.removeTokens();
-        window.location.href = "/signin"; // redirect to login
+        window.location.href = "/"; // redirect to login
         return Promise.reject(err);
       }
     }

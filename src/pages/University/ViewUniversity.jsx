@@ -4,36 +4,62 @@ import { Link, useParams } from "react-router-dom";
 import { Heading, SubText } from "../../components/Typography";
 import { ActionButtons, Button } from "../../components/Button";
 import { IoIosContact } from "react-icons/io";
-import { MdOutlineMail } from "react-icons/md";
+import { MdOutlineMail, MdVerifiedUser } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { AddBadgeModal } from "../../components/Modal";
+import { HiMiniUsers } from "react-icons/hi2";
+import { BadgeService } from "../../services/BadgeService";
+import { useApi } from "../../helper/UseApi";
 
 export default function ViewUniversity() {
   const [university, setUniversity] = useState(null);
   const service = new UnversityService();
-  const [loading, setloading] = useState(true);
+    const { request, loading, error } = useApi(service);
+  
+  const badgeservice = new BadgeService();
+
+  // const [loading, setloading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedBadge, setSelectedBadge] = useState(null);
 
   const { id } = useParams();
   async function getUniByid(id) {
-    try {
-      const res = await service.getUniversitybyiD(id);
-      setUniversity(res?.data);
-      console.log(res.data);
-      setloading(false);
-    } catch (error) {
-      console.error("error fetching university", error);
+     const data = await request("getUniversitybyiD", id);
+    if (data) {
+      setUniversity(data);
+      loading
     }
+
+    if (error) {
+      console.log(error);
+    }
+    // try {
+    //   const res = await service.getUniversitybyiD(id);
+    //   setUniversity(res?.data);
+    //   console.log(res.data);
+    //   setloading(false);
+    // } catch (error) {
+    //   console.error("error fetching university", error);
+    // }
   }
   useEffect(() => {
     getUniByid(id);
   }, [id]);
+  function handleAddBadge() {
+    setSelectedBadge(null); // reset form for new badge
+    setOpenModal(true);
+  }
 
-  const handleAddBadge = (data) => {
-    console.log("Badge Added:", data);
+  function handleEditBadge(badge) {
+    setSelectedBadge({
+      id: badge.id, // important for edit
+      badge_name: badge.badge_name,
+      condition_date: badge.condition_date,
+      badge_url: badge.badge_url,
+    });
+    setOpenModal(true);
+  }
 
-    // API call here...
-  };
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
       {loading ? (
@@ -139,19 +165,7 @@ export default function ViewUniversity() {
                   <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
                     <div className="flex items-center">
                       <div className="bg-blue-100 p-2 rounded-lg mr-3">
-                        <svg
-                          className="w-6 h-6 text-blue-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5 0c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5-.672-1.5-1.5-1.5z"
-                          />
-                        </svg>
+                        <HiMiniUsers className="text-blue-400 w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-600">Total Students</p>
@@ -165,19 +179,7 @@ export default function ViewUniversity() {
                   <div className="bg-green-50 border border-green-100 rounded-lg p-4">
                     <div className="flex items-center">
                       <div className="bg-green-100 p-2 rounded-lg mr-3">
-                        <svg
-                          className="w-6 h-6 text-green-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                          />
-                        </svg>
+                        <MdVerifiedUser className="text-green-400 w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-600">Verified Users</p>
@@ -208,18 +210,16 @@ export default function ViewUniversity() {
                       </p>
                       <div className="flex justify-between">
                         <p className="text-gray-500 text-sm ">
-                        {b.condition_date}
-                      </p>
-                       <ActionButtons
-                      className="mx-auto"
-                      editLink={`/edituniversity`}
-                   
-                    />
+                          {b.condition_date}
+                        </p>
+                        <button
+                          className="text-blue-500 hover:underline"
+                          onClick={() => handleEditBadge(b)}
+                        >
+                          Edit
+                        </button>
                       </div>
-                    
                     </div>
-
-                   
                   </div>
                 ))}
               </div>
@@ -231,12 +231,22 @@ export default function ViewUniversity() {
                 <Button title="Edit" />
               </Link>
 
-              <Button title="Add badge" onClick={() => setOpenModal(true)} />
+              <Button
+                title="Add badge"
+                onClick={() => {
+                  setOpenModal(true);
+                  setSelectedBadge(null); // Reset selected badge when modal closes
+                }}
+              />
               <AddBadgeModal
+                key={selectedBadge?.id || "add"} // This forces re-render when badge changes
                 id={id}
                 open={openModal}
-                onClose={() => setOpenModal(false)}
-                onSubmit={handleAddBadge}
+                onClose={() => {
+                  setOpenModal(false);
+                  setSelectedBadge(null);
+                }}
+                initialData={selectedBadge}
               />
             </div>
           </div>

@@ -1,54 +1,34 @@
 import { AllApiEndPoints } from "./ApiUrl";
+import BaseService from "./BaseService";
 import axiosInstance from "./interceptor/interceptor";
 
 export class UnversityService {
   async addUniversity(body) {
-    try {
-      const response = await axiosInstance.post(
-        AllApiEndPoints.university,
-        body
-      );
-      return response.data;
-    } catch (error) {
-      console.error("University cannot add add:", error);
-      throw error;
-    }
+    return await BaseService.post(
+      AllApiEndPoints.university,
+      body,
+      "Cannnot Add university"
+    );
   }
   async GetAllUniversity() {
-    try {
-      const response = await axiosInstance.get(AllApiEndPoints.university);
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      console.error("University cannot add add:", error);
-      throw error;
-    }
+    return await BaseService.get(
+      AllApiEndPoints.university,
+      "Error fetching All University"
+    );
   }
 
   async getUniversitybyiD(id) {
-    try {
-      const response = await axiosInstance.get(
-        `${AllApiEndPoints.university}/${id}`
-      );
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      console.error("University cannot add add:", error);
-      throw error;
-    }
+    return await BaseService.get(
+      `${AllApiEndPoints.university}/${id}`,
+      "Error"
+    );
   }
 
-  async updateUniversity(body , id) {
-    try {
-      const response = await axiosInstance.put(
-        `${AllApiEndPoints.university}/${id}`,
-        body
-      );
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      console.error("University cannot add add:", error);
-      throw error;
-    }
+  async updateUniversity(id, body) {
+    return await BaseService.put(
+      `${AllApiEndPoints.university}/${id}`,
+      body,
+      "Error while updating data"
+    );
   }
 }

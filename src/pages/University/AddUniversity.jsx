@@ -12,10 +12,13 @@ import { environment } from "../../environment/environment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Heading, SubText } from "../../components/Typography";
 import ImageUploadField from "../../components/ImageUploadField";
+import { useApi } from "../../helper/UseApi";
 
 const AddUniversity = () => {
   const service = new UnversityService();
   const { id } = useParams();
+  const { request, loading, error } = useApi(service);
+
   const navigate = useNavigate();
   const {
     register,
@@ -28,15 +31,13 @@ const AddUniversity = () => {
     resolver: zodResolver(id ? updateUniversitySchema : addUniversitySchema),
     defaultValues: {
       email: "",
-
       password: "",
       confirmPassword: "",
       name: "",
       logo: "",
       domain: "",
       location: "",
-      totalStudents: 0,
-      verifiedUsers: 0,
+      
     },
     mode: "onChange",
   });
@@ -46,10 +47,8 @@ const AddUniversity = () => {
   }, [errors]);
 
   async function getUniversitybyid(id) {
-    try {
-      const response = await service.getUniversitybyiD(id);
-      const data = response?.data;
-      console.log(response.data);
+    const data = await request("getUniversitybyiD", id);
+    if (data) {
       reset({
         email: data.user?.email || "-",
         role: data.user?.role || "-",
@@ -57,12 +56,30 @@ const AddUniversity = () => {
         logo: data.logo,
         domain: data.domain || "-",
         location: data.location || "-",
-        totalStudents: data.totalStudents || "-",
-        verifiedUsers: data.verifiedUsers || "-",
+       
       });
-    } catch (error) {
-      console.log("Error fetching single university", error);
     }
+
+    if (error) {
+      console.log(error);
+    }
+    // try {
+    //   const response = await service.getUniversitybyiD(id);
+    //   const data = response?.data;
+    //   console.log(response.data);
+    //   reset({
+    //     email: data.user?.email || "-",
+    //     role: data.user?.role || "-",
+    //     name: data.name || "-",
+    //     logo: data.logo,
+    //     domain: data.domain || "-",
+    //     location: data.location || "-",
+    //     totalStudents: data.totalStudents || "-",
+    //     verifiedUsers: data.verifiedUsers || "-",
+    //   });
+    // } catch (error) {
+    //   console.log("Error fetching single university", error);
+    // }
   }
 
   useEffect(() => {
@@ -71,25 +88,39 @@ const AddUniversity = () => {
     }
   }, [id, reset]);
 
-  async function submit(data) {
-    try {
-      if (id) {
-        const response = await service.updateUniversity(data, id);
-        if (response.success === true) {
-          console.log("update university", response);
-          navigate("/university");
-        } else {
-          console.log("error updating university", response);
-        }
-      } else {
-        const response = await service.addUniversity(data);
-        console.log("✅ Response Added:", response);
-        reset();
-      }
-    } catch (error) {
-      console.log("errorrrrrr", error);
+  async function submit(formData) {
+    if (id) {
+      await request("updateUniversity", id, formData);
+      navigate("/university");
+    } else {
+      await request("addUniversity", formData);
+      reset();
+    }
+
+    if (error) {
+      console.log("API Error:", error);
     }
   }
+
+  // async function submit(data) {
+  //   try {
+  //     if (id) {
+  //       const response = await service.updateUniversity(data, id);
+  //       if (response.success === true) {
+  //         console.log("update university", response);
+  //         navigate("/university");
+  //       } else {
+  //         console.log("error updating university", response);
+  //       }
+  //     } else {
+  //       const response = await service.addUniversity(data);
+  //       console.log("✅ Response Added:", response);
+  //       reset();
+  //     }
+  //   } catch (error) {
+  //     console.log("errorrrrrr", error);
+  //   }
+  // }
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 max-w-4xl mx-auto">
@@ -210,7 +241,6 @@ const AddUniversity = () => {
                 name="logo"
                 label="Upload Logo"
                 folder="university" // OR whatever folder you store logos in
-               
                 errors={errors}
                 defaultimage={getValues("logo")} // show previous logo if editing
                 onUploadSuccess={(url) => {
@@ -225,53 +255,9 @@ const AddUniversity = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                logo *
-              </label>
-              <FileInput register={register} name="logo" />
-            </div> */}
-          </div>
+       
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Total Students*
-              </label>
-              <Input
-                register={register}
-                name="totalStudents"
-                type="number"
-                placeholder="Total Students"
-                options={{ valueAsNumber: true }}
-              />
-              {errors.totalStudents && (
-                <p className="text-red-500 text-sm">
-                  {errors.totalStudents.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Veified Users *
-              </label>
-              <Input
-                register={register}
-                name="verifiedUsers"
-                type="number"
-                placeholder="Verified User"
-                options={{ valueAsNumber: true }}
-              />
-              {errors.verifiedUsers && (
-                <p className="text-red-500 text-sm">
-                  {errors.verifiedUsers.message}
-                </p>
-              )}
-            </div>
-          </div>
-
+       
           {/* Submit Button */}
           <div className="pt-4">
             <Button title={id ? "Update University" : "Add University"} />
