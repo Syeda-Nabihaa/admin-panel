@@ -43,6 +43,8 @@ import AddUniversity from "./pages/University/AddUniversity";
 import Adduser from "./pages/users/Adduser";
 import ViewUniversity from "./pages/University/ViewUniversity";
 import Profile from "./pages/auth/Profile";
+import Degree from "./pages/degree/Degree";
+import AddDegree from "./pages/degree/AddDegree";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -53,8 +55,10 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route element={<SidebarDemo />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          {/*---------------------------------User --------------------------------- */}
           <Route path="/user" element={<User />} />
           <Route path="/adduser" element={<Adduser />} />
+          <Route path="/profile" element={<Profile />} />
 
           {/*---------------------------------Univeristy --------------------------------- */}
           <Route path="/university" element={<UniversityTable />} />
@@ -62,7 +66,9 @@ function App() {
           <Route path="/edituniversity/:id" element={<AddUniversity />} />
           <Route path="/university/:id" element={<ViewUniversity />} />
 
-          <Route path="/profile" element={<Profile />} />
+          {/*--------------------------------- Degree --------------------------------- */}
+            <Route path="/degree" element={<Degree />} />
+            <Route path="/adddegree" element={<AddDegree />} />
 
           <Route path="/community" element={<CommunitiesTable />} />
           <Route path="/addcommunity" element={<AddCommunityForm />} />

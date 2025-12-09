@@ -15,5 +15,7 @@ getUsers :`${environment.baseUrl}user`,
 upload :`${environment.baseUrl}media/upload`,
 
 //---------------------- Badge -------------------------------------
-badge:`${environment.baseUrl}badge`
+badge:`${environment.baseUrl}badge`,
+
+degree:`${environment.baseUrl}degree`
 }

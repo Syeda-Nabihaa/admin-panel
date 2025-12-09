@@ -17,7 +17,7 @@ export const addUniversitySchema = z
     confirmPassword: z
       .string()
       .min(6, "Confirm password must be at least 6 characters"),
-    domain: z.string().optional(),
+    domain: z.string().regex(/^[A-Za-z0-9.-]+\.edu(\.[A-Za-z]{2,})+$/,  'Domain must be like harvard.edu.uk ',),
 
     location: z.string().min(1, "Location is required"),
     logo: z.string().min(1, "logo URL is required"),
@@ -41,7 +41,7 @@ export const addUserSchema = z
       .regex(/\d/, "Must include a number")
       .regex(/[!@#$%^&*]/, "Must include a special character"),
     confirmPassword: z.string(),
-    role: z.string().min(3, "Role is required"),
+   
     avatarUrl: z.string().min(1, "logo URL is required"),
   })
   .refine((data) => data.password === data.confirmPassword, {

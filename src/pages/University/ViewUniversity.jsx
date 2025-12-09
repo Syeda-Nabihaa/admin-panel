@@ -10,12 +10,14 @@ import { AddBadgeModal } from "../../components/Modal";
 import { HiMiniUsers } from "react-icons/hi2";
 import { BadgeService } from "../../services/BadgeService";
 import { useApi } from "../../helper/UseApi";
+import { BadgeCard } from "../../components/Card";
+import Loader from "../../components/Loader";
 
 export default function ViewUniversity() {
   const [university, setUniversity] = useState(null);
   const service = new UnversityService();
-    const { request, loading, error } = useApi(service);
-  
+  const { request, loading, error } = useApi(service);
+
   const badgeservice = new BadgeService();
 
   // const [loading, setloading] = useState(true);
@@ -24,10 +26,10 @@ export default function ViewUniversity() {
 
   const { id } = useParams();
   async function getUniByid(id) {
-     const data = await request("getUniversitybyiD", id);
+    const data = await request("getUniversitybyiD", id);
     if (data) {
       setUniversity(data);
-      loading
+      loading;
     }
 
     if (error) {
@@ -45,10 +47,6 @@ export default function ViewUniversity() {
   useEffect(() => {
     getUniByid(id);
   }, [id]);
-  function handleAddBadge() {
-    setSelectedBadge(null); // reset form for new badge
-    setOpenModal(true);
-  }
 
   function handleEditBadge(badge) {
     setSelectedBadge({
@@ -63,11 +61,8 @@ export default function ViewUniversity() {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <span className="ml-3 text-gray-600">
-            Loading university details...
-          </span>
+      <div className="flex justify-center items-center py-20">
+          <Loader />
         </div>
       ) : university ? (
         <>
@@ -75,10 +70,8 @@ export default function ViewUniversity() {
           <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-r from-gray-50 to-white">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {university.name}
-                </h1>
-                <p className="text-gray-600 mt-1">University Details</p>
+                <Heading title={university.name} />
+                <SubText text="University Details" />
               </div>
               <div className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
                 {university.verifiedUsers > 0
@@ -197,30 +190,12 @@ export default function ViewUniversity() {
 
               <div className="flex gap-5 mt-6">
                 {university.badges?.map((b, i) => (
-                  <div className="bg-white rounded-xl shadow-md p-4  hover:shadow-lg transition">
-                    <img
-                      src={b.badge_url}
-                      alt="badge"
-                      className="w-20 h-20 object-contain mx-auto"
-                    />
-
-                    <div className="flex-1 text-center">
-                      <p className="font-semibold text-gray-800 text-lg">
-                        {b.badge_name}
-                      </p>
-                      <div className="flex justify-between">
-                        <p className="text-gray-500 text-sm ">
-                          {b.condition_date}
-                        </p>
-                        <button
-                          className="text-blue-500 hover:underline"
-                          onClick={() => handleEditBadge(b)}
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  <BadgeCard
+                    img={b.badge_url}
+                    name={b.badge_name}
+                    date={b.condition_date}
+                    onClick={() => handleEditBadge(b)}
+                  />
                 ))}
               </div>
             </div>

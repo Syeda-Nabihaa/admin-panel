@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
 import { addUniBadge } from "../services/validation/ZodSchema";
 import { BadgeService } from "../services/BadgeService";
 import { useApi } from "../helper/UseApi";
+import { DegreeService } from "../services/DegreeService";
 
 export function AddBadgeModal({ open, onClose, id, initialData = null }) {
   const service = new BadgeService();
@@ -172,6 +173,134 @@ export function AddBadgeModal({ open, onClose, id, initialData = null }) {
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
           >
             {isEditMode ? "Update Badge" : "Save Badge"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export function AddDegreeModal({ open, onClose, id, initialData = null }) {
+  const service = new DegreeService();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const { request, loading, error } = useApi(service);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm({
+    mode: "onChange",
+  });
+
+  useEffect(() => {
+    if (initialData?.id) {
+      setIsEditMode(true);
+      reset({
+        degree_name: initialData.degree_name || "",
+      });
+    } else {
+      setIsEditMode(false);
+
+      reset({
+        degree_name: "",
+      });
+    }
+  }, [initialData, reset]);
+
+  // async function Submit(data) {
+  //   try {
+  //     if (isEditMode && initialData?.id) {
+  //       // Edit mode - update existing badge
+  //       await service.updatebadge(initialData.id, {
+  //         badge_name: data.badge_name,
+  //         condition_date: data.condition_date,
+  //         badge_url: data.badge_url,
+  //         universityId: parseInt(id),
+  //       });
+  //       console.log("✅ Badge updated:", data);
+  //     } else {
+  //       // Add mode - create new badge
+  //       await service.addBadge({
+  //         badge_name: data.badge_name,
+  //         condition_date: data.condition_date,
+  //         badge_url: data.badge_url,
+  //         universityId: parseInt(id),
+  //       });
+  //       console.log("✅ Badge added:", data);
+  //     }
+  //     reset();
+  //     onClose();
+  //   } catch (error) {
+  //     console.log("Error:", error);
+  //   }
+  // }
+  async function Submit(data) {
+    try {
+      if (isEditMode && initialData?.id) {
+        // Edit mode - update existing badge
+        await request("updatedegree", initialData.id, {
+          degree_name: data.degree_name,
+        });
+        console.log("✅ degree updated:", data);
+      } else {
+        // Add mode - create new badge
+        await request("adddegree", {
+          degree_name: data.degree_name,
+        });
+        console.log("✅ degree added:", data);
+      }
+      reset();
+      onClose();
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  }
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+      <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+        >
+          ✕
+        </button>
+
+        <h2 className="text-xl font-semibold mb-4">
+          {isEditMode ? "Edit degree" : "Add New degree"}
+        </h2>
+
+        <form onSubmit={handleSubmit(Submit)} className="space-y-4">
+          {/* Badge Name */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Degree Name
+            </label>
+            <Input
+              register={register}
+              placeholder="Enter Degree Name"
+              type="text"
+              name="degree_name"
+              required
+            />
+            {errors.degree_name && (
+              <p className="text-red-500 text-sm">
+                {errors.degree_name.message}
+              </p>
+            )}
+          </div>
+
+          {/* Save button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+          >
+            {isEditMode ? "Update Degree" : "Save degree"}
           </button>
         </form>
       </div>

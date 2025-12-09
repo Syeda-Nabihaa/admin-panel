@@ -23,7 +23,7 @@ const AddUser = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "",
+     
 
       avatarUrl: `${environment.baseUrl}abc.jpg`,
     },
@@ -106,20 +106,7 @@ const AddUser = () => {
                 <p className="text-red-500 text-sm">{errors.email.message}</p>
               )}
             </div>
-                <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Role*
-              </label>
-              <Input
-                register={register}
-                name="role"
-                type="text"
-                placeholder="Enter Role"
-              />
-              {errors.role && (
-                <p className="text-red-500 text-sm">{errors.role.message}</p>
-              )}
-            </div>
+               
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
