@@ -3,16 +3,17 @@ import { Heading, SubText } from "../../components/Typography";
 import { DegreeService } from "../../services/DegreeService";
 import { useApi } from "../../helper/UseApi";
 import { ActionButtons, Button } from "../../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { AddDegreeModal } from "../../components/Modal";
+import { MdEdit } from "react-icons/md";
 
 export default function Degree() {
   const service = new DegreeService();
-  const [selectedBadge, setSelectedBadge] = useState(null);
+  const [selectedDegree, setSelectedDegree] = useState(null);
   const [degree, setdegree] = useState([]);
-    const [openModal, setOpenModal] = useState(false);
-  
+  const [openModal, setOpenModal] = useState(false);
+
   const { request, loading, error } = useApi(service);
 
   async function getAlldata() {
@@ -25,6 +26,13 @@ export default function Degree() {
     if (error) {
       console.log(error);
     }
+  }
+  function handleEditDegree(degree) {
+    setSelectedDegree({
+      id: degree.id, // important for edit
+      degree_name: degree.degree_name,
+    });
+    setOpenModal(true);
   }
 
   useEffect(() => {
@@ -50,7 +58,7 @@ export default function Degree() {
                 title="Add Degree"
                 onClick={() => {
                   setOpenModal(true);
-                  setSelectedBadge(null);
+                  setSelectedDegree(null);
                 }}
               />
             </div>
@@ -96,7 +104,10 @@ export default function Degree() {
                     {/* Action */}
                     <td className="px-6 py-4">
                       <div className="flex justify-center">
-                        <ActionButtons editLink={`/degree/${d.id}`} />
+                        <button onClick={() => handleEditDegree(d)}>
+                          <MdEdit />
+                        </button>
+                        {/* <ActionButtons editLink={`/degree/${d.id}`} /> */}
                       </div>
                     </td>
                   </tr>
@@ -104,14 +115,15 @@ export default function Degree() {
               </tbody>
             </table>
             <AddDegreeModal
-            //   key={selectedBadge?.id || "add"} // This forces re-render when badge changes
-            //   id={id}
+              key={selectedDegree?.id || "add"} // This forces re-render when degree changes
               open={openModal}
               onClose={() => {
                 setOpenModal(false);
-                setSelectedBadge(null);
+                setSelectedDegree(null);
               }}
-              initialData={selectedBadge}
+              initialData={selectedDegree}
+              onSuccess={getAlldata}
+              loading={loading}
             />
           </div>
         </div>

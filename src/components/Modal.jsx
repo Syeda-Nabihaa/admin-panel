@@ -180,7 +180,12 @@ export function AddBadgeModal({ open, onClose, id, initialData = null }) {
   );
 }
 
-export function AddDegreeModal({ open, onClose, id, initialData = null }) {
+export function AddDegreeModal({
+  open,
+  onClose,
+  initialData = null,
+  onSuccess,
+}) {
   const service = new DegreeService();
   const [isEditMode, setIsEditMode] = useState(false);
   const { request, loading, error } = useApi(service);
@@ -211,54 +216,29 @@ export function AddDegreeModal({ open, onClose, id, initialData = null }) {
     }
   }, [initialData, reset]);
 
-  // async function Submit(data) {
-  //   try {
-  //     if (isEditMode && initialData?.id) {
-  //       // Edit mode - update existing badge
-  //       await service.updatebadge(initialData.id, {
-  //         badge_name: data.badge_name,
-  //         condition_date: data.condition_date,
-  //         badge_url: data.badge_url,
-  //         universityId: parseInt(id),
-  //       });
-  //       console.log("✅ Badge updated:", data);
-  //     } else {
-  //       // Add mode - create new badge
-  //       await service.addBadge({
-  //         badge_name: data.badge_name,
-  //         condition_date: data.condition_date,
-  //         badge_url: data.badge_url,
-  //         universityId: parseInt(id),
-  //       });
-  //       console.log("✅ Badge added:", data);
-  //     }
-  //     reset();
-  //     onClose();
-  //   } catch (error) {
-  //     console.log("Error:", error);
-  //   }
-  // }
   async function Submit(data) {
     try {
       if (isEditMode && initialData?.id) {
-        // Edit mode - update existing badge
         await request("updatedegree", initialData.id, {
           degree_name: data.degree_name,
         });
-        console.log("✅ degree updated:", data);
+        alert("Error updating degree",error)
       } else {
-        // Add mode - create new badge
         await request("adddegree", {
           degree_name: data.degree_name,
         });
-        console.log("✅ degree added:", data);
+        alert("Error updating degree",error)
       }
+
       reset();
       onClose();
+
+      if (onSuccess) onSuccess();
     } catch (error) {
       console.log("Error:", error);
     }
   }
+
   if (!open) return null;
 
   return (
@@ -300,7 +280,13 @@ export function AddDegreeModal({ open, onClose, id, initialData = null }) {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
           >
-            {isEditMode ? "Update Degree" : "Save degree"}
+            {isEditMode
+              ? loading
+                ? "Updating Degree..."
+                : "Update degree"
+              : loading
+              ? "Saving.."
+              : "Save Degree"}
           </button>
         </form>
       </div>

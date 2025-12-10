@@ -17,7 +17,7 @@ import { useApi } from "../../helper/UseApi";
 const AddUniversity = () => {
   const service = new UnversityService();
   const { id } = useParams();
-  const { request, loading, error } = useApi(service);
+  const { request, loading, error  } = useApi(service);
 
   const navigate = useNavigate();
   const {
@@ -37,7 +37,6 @@ const AddUniversity = () => {
       logo: "",
       domain: "",
       location: "",
-      
     },
     mode: "onChange",
   });
@@ -56,7 +55,6 @@ const AddUniversity = () => {
         logo: data.logo,
         domain: data.domain || "-",
         location: data.location || "-",
-       
       });
     }
 
@@ -88,19 +86,26 @@ const AddUniversity = () => {
     }
   }, [id, reset]);
 
-  async function submit(formData) {
-    if (id) {
-      await request("updateUniversity", id, formData);
-      navigate("/university");
-    } else {
-      await request("addUniversity", formData);
-      reset();
-    }
-
+async function submit(formData) {
+  if (id) {
+    await request("updateUniversity", id, formData);
     if (error) {
       console.log("API Error:", error);
+    } else {
+      navigate("/university");
+    }
+  } else {
+   const res = await request("addUniversity", formData);
+   console.log("ajajjjjj" , formData)
+    // if (error) {
+    //   console.log("API Error:", error.text);
+      
+    // } 
+      reset();
     }
   }
+
+
 
   // async function submit(data) {
   //   try {
@@ -255,15 +260,18 @@ const AddUniversity = () => {
             </div>
           </div>
 
-       
-
-       
           {/* Submit Button */}
           <div className="pt-4">
             <Button title={id ? "Update University" : "Add University"} />
           </div>
         </div>
       </form>
+{error && (
+  <p className="text-red-600 bg-red-100 p-2 rounded mt-2">
+    {error.text}
+  </p>
+)}
+
     </div>
   );
 };
