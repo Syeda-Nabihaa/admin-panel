@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { UnversityService } from "../../services/UniversityService";
 import { Link, useParams } from "react-router-dom";
-import { Heading, SubText } from "../../components/Typography";
+import {
+  Heading,
+  IconHeading,
+  IconText,
+  SubText,
+} from "../../components/Typography";
 import { ActionButtons, Button } from "../../components/Button";
 import { IoIosContact } from "react-icons/io";
 import { MdOutlineMail, MdVerifiedUser } from "react-icons/md";
@@ -12,6 +17,7 @@ import { BadgeService } from "../../services/BadgeService";
 import { useApi } from "../../helper/UseApi";
 import { BadgeCard } from "../../components/Card";
 import Loader from "../../components/Loader";
+import { SiMinutemailer } from "react-icons/si";
 
 export default function ViewUniversity() {
   const [university, setUniversity] = useState(null);
@@ -61,7 +67,7 @@ export default function ViewUniversity() {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
       {loading ? (
-      <div className="flex justify-center items-center py-20">
+        <div className="flex justify-center items-center py-20">
           <Loader />
         </div>
       ) : university ? (
@@ -87,44 +93,30 @@ export default function ViewUniversity() {
               {/* Left Column */}
               <div className="space-y-6">
                 <div className="bg-gray-50 rounded-lg p-5">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                    <IoIosContact />
-                    Contact Information
-                  </h3>
+                  <IconHeading
+                    icon={<IoIosContact />}
+                    text="  Contact Information"
+                  />
+
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-500 mb-1">
                         Email Address
                       </label>
-                      <div className="flex items-center text-gray-900">
-                        <MdOutlineMail />
-                        <a
-                          href={`mailto:${university.user?.email}`}
-                          className="hover:text-blue-600 hover:underline"
-                        >
-                          {university.user?.email || "Not provided"}
-                        </a>
-                      </div>
+                      <IconText
+                        icon={<MdOutlineMail />}
+                        text={university.user?.email || "Not provided"}
+                      />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-gray-500 mb-1">
                         Website Domain
                       </label>
-                      <div className="flex items-center text-gray-900">
-                        <svg
-                          className="w-4 h-4 mr-2 text-gray-400"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        <span>{university.domain || "No domain set"}</span>
-                      </div>
+                      <IconText
+                        icon={<SiMinutemailer />}
+                        text={university.domain || "No domain set"}
+                      />
                     </div>
                   </div>
                 </div>
@@ -133,22 +125,20 @@ export default function ViewUniversity() {
               {/* Right Column */}
               <div className="space-y-6">
                 <div className="bg-gray-50 rounded-lg p-5">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                    <IoLocationOutline />
-                    Campus Information
-                  </h3>
+                  <IconHeading
+                    icon={<IoLocationOutline />}
+                    text="  Campus Information"
+                  />
+
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-500 mb-1">
                         Location
                       </label>
-                      <div className="flex items-center text-gray-900">
-                        <IoLocationOutline />
-
-                        <span>
-                          {university.location || "Location not specified"}
-                        </span>
-                      </div>
+                      <IconText
+                        icon={<IoLocationOutline />}
+                        text={university.location || "Location not specified"}
+                      />
                     </div>
                   </div>
                 </div>

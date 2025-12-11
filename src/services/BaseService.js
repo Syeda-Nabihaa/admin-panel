@@ -19,8 +19,9 @@ class baseService {
         },
       });
       return response.data;
-    } catch {
+    } catch(error) {
       console.log(errMsg);
+        throw error;
     }
   }
   async put(url, body, errMsg) {

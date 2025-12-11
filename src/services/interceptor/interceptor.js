@@ -23,35 +23,32 @@ axiosInstance.interceptors.request.use(
 // Handle 401 -> refresh token
 axiosInstance.interceptors.response.use(
   (response) => response,
-  // console.log(response)
   async (error) => {
     const originalRequest = error.config;
-    console.log(error);
+
     if (
-      error.response?.statusCode === 401 &&
+      error.response?.status === 401 &&
       !originalRequest._retry &&
       TokenService.getRefreshToken()
     ) {
       originalRequest._retry = true;
 
-      // try {
-      //   // const refreshToken = TokenService.getRefreshToken();
-      //   // console.log(refreshToken)
-      //   // const res = await axios.post(`${environment.baseUrl}/refresh`, {
-      //   //   refreshToken,
-      //   // });
+      try {
+        const refreshToken = TokenService.getRefreshToken();
+        const res = await axios.post(`${environment.baseUrl}/refresh`, {
+          refreshToken,
+        });
 
-      //   const { accessToken, accessTokenExpiresIn } = res.data;
-      //   TokenService.setToken({ accessToken, refreshToken, accessTokenExpiresIn });
+        const { accessToken, accessTokenExpiresIn } = res.data;
+        TokenService.setToken({ accessToken, refreshToken, accessTokenExpiresIn });
 
-      //   originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-      //   return axiosInstance(originalRequest);
-      // } catch (err) {
-      //   TokenService.removeTokens();
-      //   window.location.href = "/"; // redirect to login
-      //   return Promise.reject(err);
-      // }
-      console.log(TokenService.getRefreshToken());
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        return axiosInstance(originalRequest);
+      } catch (err) {
+        TokenService.removeTokens();
+        window.location.href = "/"; // redirect to login
+        return Promise.reject(err);
+      }
     }
 
     return Promise.reject(error);

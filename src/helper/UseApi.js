@@ -10,12 +10,11 @@ export const useApi = (service) => {
 
     try {
       const res = await service[method](...params);
+
       return res.data;
     } catch (err) {
       const msgData = err.response?.data?.message;
-      console.log("errrr" , err)
-      console.log("errorrrrrrrrr",err.response?.data?.data?.message)
-      console.log("errorrrrrrrrr",err.response?.message)
+
       const msg = Array.isArray(msgData)
         ? msgData[0]
         : msgData || "Something went wrong";
@@ -25,7 +24,7 @@ export const useApi = (service) => {
         text: msg,
       });
 
-      return null;
+      return { error: msg };
     } finally {
       setLoading(false);
     }

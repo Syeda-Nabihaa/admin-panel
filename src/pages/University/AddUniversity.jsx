@@ -17,7 +17,7 @@ import { useApi } from "../../helper/UseApi";
 const AddUniversity = () => {
   const service = new UnversityService();
   const { id } = useParams();
-  const { request, loading, error  } = useApi(service);
+  const { request, loading, error } = useApi(service);
 
   const navigate = useNavigate();
   const {
@@ -86,25 +86,29 @@ const AddUniversity = () => {
     }
   }, [id, reset]);
 
-async function submit(formData) {
-  if (id) {
-    await request("updateUniversity", id, formData);
-    if (error) {
-      console.log("API Error:", error);
+  async function submit(formData) {
+    if (id) {
+      await request("updateUniversity", id, formData);
+      if (error) {
+        console.log("API Error:", error);
+      } else {
+        navigate("/university");
+      }
     } else {
-      navigate("/university");
-    }
-  } else {
-   const res = await request("addUniversity", formData);
-   console.log("ajajjjjj" , formData)
-    // if (error) {
-    //   console.log("API Error:", error.text);
-      
-    // } 
+      const res = await request("addUniversity", formData);
+
+       if (res?.error) {
+    return;
+  }
+
       reset();
     }
   }
-
+  useEffect(() => {
+  if (error) {
+    console.log("API Error:", error.text);
+  }
+}, [error]);
 
 
   // async function submit(data) {
@@ -134,7 +138,9 @@ async function submit(formData) {
         <Heading title={id ? "Edit University" : "Add University"} />
         <SubText text="add university" />
       </div>
-
+    {error && (
+        <p className="text-red-600 bg-red-100 p-2 rounded mt-2 mb-4">{error.text}</p>
+      )}
       {/* Form */}
       <form onSubmit={handleSubmit(submit)}>
         <div className="space-y-6">
@@ -266,12 +272,7 @@ async function submit(formData) {
           </div>
         </div>
       </form>
-{error && (
-  <p className="text-red-600 bg-red-100 p-2 rounded mt-2">
-    {error.text}
-  </p>
-)}
-
+      
     </div>
   );
 };
