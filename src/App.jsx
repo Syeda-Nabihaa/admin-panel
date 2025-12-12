@@ -42,9 +42,11 @@ import UniversityTable from "./pages/University/UniversityTable";
 import AddUniversity from "./pages/University/AddUniversity";
 import Adduser from "./pages/users/Adduser";
 import ViewUniversity from "./pages/University/ViewUniversity";
-import Profile from "./pages/auth/Profile";
+import Profile from "./pages/auth/Profile/Profile";
 import Degree from "./pages/degree/Degree";
 import AddDegree from "./pages/degree/AddDegree";
+import AllRoles from "./pages/users/AllRoles";
+// import AddStudents from "./pages/students/Addstudents";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -56,6 +58,9 @@ function App() {
         <Route element={<SidebarDemo />}>
           <Route path="/dashboard" element={<Dashboard />} />
           {/*---------------------------------User --------------------------------- */}
+
+          <Route path="/allusers" element={<AllRoles />} />
+          {/* <Route path="/allstudents" element={<AddStudents />} /> */}
           <Route path="/user" element={<User />} />
           <Route path="/adduser" element={<Adduser />} />
           <Route path="/profile" element={<Profile />} />

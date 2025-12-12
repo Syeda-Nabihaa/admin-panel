@@ -17,7 +17,12 @@ export const addUniversitySchema = z
     confirmPassword: z
       .string()
       .min(6, "Confirm password must be at least 6 characters"),
-    domain: z.string().regex(/^[A-Za-z0-9.-]+\.edu(\.[A-Za-z]{2,})+$/,  'Domain must be like harvard.edu.uk ',),
+    domain: z
+      .string()
+      .regex(
+        /^[A-Za-z0-9.-]+\.edu(\.[A-Za-z]{2,})+$/,
+        "Domain must be like harvard.edu.uk "
+      ),
 
     location: z.string().min(1, "Location is required"),
     logo: z.string().min(1, "logo URL is required"),
@@ -41,7 +46,7 @@ export const addUserSchema = z
       .regex(/\d/, "Must include a number")
       .regex(/[!@#$%^&*]/, "Must include a special character"),
     confirmPassword: z.string(),
-   
+
     avatarUrl: z.string().min(1, "logo URL is required"),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -60,4 +65,17 @@ export const addUniBadge = z.object({
   badge_name: z.string().min(1, "Badge name is required"),
   condition_date: z.string(),
   badge_url: z.string().min(1, "logo URL is required"),
+});
+
+export const addStudentSchema = z.object({
+  user_name: z.string().trim().min(1, "Please Enter First Name"),
+
+  uni_email: z.string().email().min(4, "Email is required"),
+  phone_number: z.coerce.number().min(1, "Phone Number is required"),
+  enrollment_no: z.string().min(4, "Enrollemnt number is required"),
+  registration_no: z.string().min(4, "Registration number is required"),
+  semester: z.coerce.number().min(4, "Semester is required"),
+  expected_gradyear: z.string().min(4, "Gaduation year is required"),
+  admission_year: z.string().min(4, "admissionyear is required"),
+  gender: z.string().min(4, "Gender is required"),
 });

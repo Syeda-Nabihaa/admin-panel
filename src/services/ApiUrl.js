@@ -17,5 +17,8 @@ upload :`${environment.baseUrl}media/upload`,
 //---------------------- Badge -------------------------------------
 badge:`${environment.baseUrl}badge`,
 
-degree:`${environment.baseUrl}degree`
+degree:`${environment.baseUrl}degree`,
+
+//---------------------- students -------------------------------------
+register:`${environment.baseUrl}register`
 }
