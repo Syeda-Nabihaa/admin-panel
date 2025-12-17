@@ -46,6 +46,7 @@ import Profile from "./pages/auth/Profile/Profile";
 import Degree from "./pages/degree/Degree";
 import AddDegree from "./pages/degree/AddDegree";
 import AllRoles from "./pages/users/AllRoles";
+import VerifyToken from "./pages/publicPage/VerifyToken";
 // import AddStudents from "./pages/students/Addstudents";
 
 function App() {
@@ -54,6 +55,9 @@ function App() {
   return (
     <>
       <Routes>
+           {/*--------------------------------- Public Page --------------------------------- */}
+           <Route path="/verify-token" element={<VerifyToken />} />
+        
         <Route path="/" element={<Login />} />
         <Route element={<SidebarDemo />}>
           <Route path="/dashboard" element={<Dashboard />} />
