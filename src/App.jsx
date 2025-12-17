@@ -48,6 +48,7 @@ import VerifyToken from "./pages/publicPage/VerifyToken";
 import Master from "./pages/masters/Master";
 import Degree from "./pages/masters/degree/Degree";
 import AddDegree from "./pages/masters/degree/AddDegree";
+import Reports from "./pages/reports/Reports";
 // import AddStudents from "./pages/students/Addstudents";
 
 function App() {
@@ -79,7 +80,8 @@ function App() {
           {/*--------------------------------- Degree --------------------------------- */}
             <Route path="/degree" element={<Degree />} />
             <Route path="/adddegree" element={<AddDegree />} />
-
+         {/*--------------------------------- Reports --------------------------------- */}
+                    <Route path="/reports" element={<Reports />} />
 
            {/*--------------------------------- Master Page --------------------------------- */}
              <Route path="/master" element={<Master />} />

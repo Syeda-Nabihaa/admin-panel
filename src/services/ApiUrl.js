@@ -24,7 +24,9 @@ register:`${environment.baseUrl}register`,
 
 
 //---------------------- BanWords -------------------------------------
-banwords:`${environment.baseUrl}banwords`
+banwords:`${environment.baseUrl}banwords`,
 
+//---------------------- Report -------------------------------------
+report:`${environment.baseUrl}report`,
 
 }
