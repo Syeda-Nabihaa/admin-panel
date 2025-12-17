@@ -20,5 +20,11 @@ badge:`${environment.baseUrl}badge`,
 degree:`${environment.baseUrl}degree`,
 
 //---------------------- students -------------------------------------
-register:`${environment.baseUrl}register`
+register:`${environment.baseUrl}register`,
+
+
+//---------------------- BanWords -------------------------------------
+banwords:`${environment.baseUrl}banwords`
+
+
 }

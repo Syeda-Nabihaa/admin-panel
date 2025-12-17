@@ -62,8 +62,8 @@ const links = [
     icon: <IconBuilding className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   },
     {
-    label: "Degree",
-    to: "/degree",
+    label: "Master",
+    to: "/master",
     icon: <IconBuilding className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
   },
   {

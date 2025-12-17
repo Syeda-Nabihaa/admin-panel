@@ -43,10 +43,11 @@ import AddUniversity from "./pages/University/AddUniversity";
 import Adduser from "./pages/users/Adduser";
 import ViewUniversity from "./pages/University/ViewUniversity";
 import Profile from "./pages/auth/Profile/Profile";
-import Degree from "./pages/degree/Degree";
-import AddDegree from "./pages/degree/AddDegree";
 import AllRoles from "./pages/users/AllRoles";
 import VerifyToken from "./pages/publicPage/VerifyToken";
+import Master from "./pages/masters/Master";
+import Degree from "./pages/masters/degree/Degree";
+import AddDegree from "./pages/masters/degree/AddDegree";
 // import AddStudents from "./pages/students/Addstudents";
 
 function App() {
@@ -78,6 +79,10 @@ function App() {
           {/*--------------------------------- Degree --------------------------------- */}
             <Route path="/degree" element={<Degree />} />
             <Route path="/adddegree" element={<AddDegree />} />
+
+
+           {/*--------------------------------- Master Page --------------------------------- */}
+             <Route path="/master" element={<Master />} />
 
           <Route path="/community" element={<CommunitiesTable />} />
           <Route path="/addcommunity" element={<AddCommunityForm />} />

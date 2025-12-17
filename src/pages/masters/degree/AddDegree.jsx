@@ -1,8 +1,8 @@
 import React from "react";
-import { Heading, SubText } from "../../components/Typography";
 import { useParams } from "react-router-dom";
-import { Input } from "../../components/InputFields";
-import { Button } from "../../components/Button";
+import { Heading, SubText } from "../../../components/Typography";
+import { Input } from "../../../components/InputFields";
+import { Button } from "../../../components/Button";
 
 export default function AddDegree() {
   const { id } = useParams();

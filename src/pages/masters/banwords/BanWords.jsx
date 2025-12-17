@@ -1,36 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { Heading, SubText } from "../../components/Typography";
-import { DegreeService } from "../../services/DegreeService";
-import { useApi } from "../../helper/UseApi";
-import { ActionButtons, Button } from "../../components/Button";
-import { Link, useParams } from "react-router-dom";
-import Loader from "../../components/Loader";
-import { AddDegreeModal } from "../../components/Modal";
+import { banwordsService } from "../../../services/BanWordsService";
+import { useApi } from "../../../helper/UseApi";
+import Loader from "../../../components/Loader";
+import { Heading, SubText } from "../../../components/Typography";
 import { MdEdit } from "react-icons/md";
+import { Button } from "../../../components/Button";
+import { AddbadWords } from "../../../components/Modal";
 
-export default function Degree() {
-  const service = new DegreeService();
-  const [selectedDegree, setSelectedDegree] = useState(null);
-  const [degree, setdegree] = useState([]);
+export default function BanWords() {
+  const service = new banwordsService();
+
+  const [banwords, setbanwords] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedwords, setSelectedWords] = useState(null);
 
   const { request, loading, error } = useApi(service);
 
   async function getAlldata() {
-    const data = await request("GetAlldegree");
+    const data = await request("GetAllbanwords");
     if (data) {
-      setdegree(data);
-      console.log(data);
+      setbanwords(data.data);
+      console.log(data.data);
     }
 
     if (error) {
       console.log(error);
     }
   }
-  function handleEditDegree(degree) {
-    setSelectedDegree({
-      id: degree.id, // important for edit
-      degree_name: degree.degree_name,
+  function handleEditWords(data) {
+    setSelectedWords({
+      id: data.id, // important for edit
+      word: data.word,
+      category: data.category,
     });
     setOpenModal(true);
   }
@@ -39,7 +40,7 @@ export default function Degree() {
     getAlldata();
   }, []);
   return (
-    <>
+    <div>
       {loading ? (
         <div className="flex justify-center items-center py-20">
           <Loader />
@@ -50,15 +51,13 @@ export default function Degree() {
           <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-r from-gray-50 to-white">
             <div className="flex items-center justify-between">
               <div>
-                <Heading title="Degree" />
-                <SubText text="All Degree" />
+                <Heading title="Bad Words" />
+                <SubText text="All bad words" />
               </div>
-
               <Button
-                title="Add Degree"
+                title="Add Ban Words"
                 onClick={() => {
                   setOpenModal(true);
-                  setSelectedDegree(null);
                 }}
               />
             </div>
@@ -73,7 +72,10 @@ export default function Degree() {
                     S.no
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    Name
+                    words
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
+                    Category
                   </th>
                   <th className="px-6 py-3 text-center text-sm font-semibold text-gray-600">
                     Action
@@ -82,7 +84,7 @@ export default function Degree() {
               </thead>
 
               <tbody className="bg-white divide-y divide-gray-100">
-                {degree.map((d, index) => (
+                {banwords.map((d, index) => (
                   <tr
                     key={d.id}
                     className="hover:bg-gray-50 transition-all duration-150"
@@ -96,7 +98,14 @@ export default function Degree() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="text-sm font-medium text-gray-900">
-                          {d.degree_name}
+                          {d.word}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="text-sm font-medium text-gray-900">
+                          {d.category}
                         </div>
                       </div>
                     </td>
@@ -104,7 +113,7 @@ export default function Degree() {
                     {/* Action */}
                     <td className="px-6 py-4">
                       <div className="flex justify-center">
-                        <button onClick={() => handleEditDegree(d)}>
+                        <button onClick={() => handleEditWords(d)}>
                           <MdEdit />
                         </button>
                         {/* <ActionButtons editLink={`/degree/${d.id}`} /> */}
@@ -114,20 +123,20 @@ export default function Degree() {
                 ))}
               </tbody>
             </table>
-            <AddDegreeModal
-              key={selectedDegree?.id || "add"} // This forces re-render when degree changes
+            <AddbadWords
+              key={selectedwords?.id || "add"} // This forces re-render when degree changes
               open={openModal}
               onClose={() => {
                 setOpenModal(false);
-                setSelectedDegree(null);
+                setSelectedWords(null);
               }}
-              initialData={selectedDegree}
+              initialData={selectedwords}
               onSuccess={getAlldata}
               loading={loading}
             />
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

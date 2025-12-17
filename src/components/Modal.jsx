@@ -8,6 +8,7 @@ import { addUniBadge } from "../services/validation/ZodSchema";
 import { BadgeService } from "../services/BadgeService";
 import { useApi } from "../helper/UseApi";
 import { DegreeService } from "../services/DegreeService";
+import { banwordsService } from "../services/BanWordsService";
 
 export function AddBadgeModal({ open, onClose, id, initialData = null }) {
   const service = new BadgeService();
@@ -287,6 +288,142 @@ export function AddDegreeModal({
               : loading
               ? "Saving.."
               : "Save Degree"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+
+export function AddbadWords({
+  open,
+  onClose,
+  initialData = null,
+  onSuccess,
+}) {
+  const service = new banwordsService();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const { request, loading, error } = useApi(service);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm({
+    mode: "onChange",
+  });
+
+  useEffect(() => {
+    if (initialData?.id) {
+      setIsEditMode(true);
+      reset({
+        word: initialData.word || "",
+        category: initialData.category || "",
+      });
+    } else {
+      setIsEditMode(false);
+
+      reset({
+        word: "",
+        category:""
+      });
+    }
+  }, [initialData, reset]);
+
+  async function Submit(data) {
+    try {
+      if (isEditMode && initialData?.id) {
+        await request("updatebanwords", initialData.id, {
+          word: data.word,
+          category: data.category,
+        });
+        alert("Error updating ban words",error)
+      } else {
+        await request("addbanwords", {
+          word: data.word,
+          category: data.category,
+        });
+        alert("Error updating banwords",error)
+      }
+
+      reset();
+      onClose();
+
+      if (onSuccess) onSuccess();
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  }
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+      <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+        >
+          ✕
+        </button>
+
+        <h2 className="text-xl font-semibold mb-4">
+          {isEditMode ? "Edit degree" : "Add New degree"}
+        </h2>
+
+        <form onSubmit={handleSubmit(Submit)} className="space-y-4">
+          {/* Badge Name */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Ban Word
+            </label>
+            <Input
+              register={register}
+              placeholder="Enter bad word"
+              type="text"
+              name="word"
+              required
+            />
+            {errors.word && (
+              <p className="text-red-500 text-sm">
+                {errors.word.message}
+              </p>
+            )}
+          </div>
+           <div>
+            <label className="block text-sm font-medium mb-1">
+              Category
+            </label>
+            <Input
+              register={register}
+              placeholder="Enter bad word"
+              type="text"
+              name="category"
+              required
+            />
+            {errors.category && (
+              <p className="text-red-500 text-sm">
+                {errors.category.message}
+              </p>
+            )}
+          </div>
+
+          {/* Save button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+          >
+            {isEditMode
+              ? loading
+                ? "Updating word..."
+                : "Update word"
+              : loading
+              ? "Saving.."
+              : "Save word"}
           </button>
         </form>
       </div>
