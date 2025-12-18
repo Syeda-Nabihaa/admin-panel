@@ -34,7 +34,7 @@ useEffect(() => {
     return <div>Loading...</div>;
   }
   return (
-  <div className="bg-white rounded-xl shadow-sm p-6 w-full">
+  <div className="bg-dark rounded-xl shadow-sm p-6 w-full">
   <div className="flex items-center space-x-4 mb-8">
     <div className="w-16 h-16 rounded-full bg-linear-to-br from-blue-100 to-blue-200 flex items-center justify-center overflow-hidden">
       {user.userDetails.avatarUrl ? (
@@ -50,7 +50,7 @@ useEffect(() => {
       )}
     </div>
     <div>
-      <h2 className="text-xl font-bold text-gray-900">User Profile</h2>
+      <h2 className="text-xl font-bold text-white">User Profile</h2>
       <p className="text-gray-600 text-sm">Account Information</p>
     </div>
   </div>

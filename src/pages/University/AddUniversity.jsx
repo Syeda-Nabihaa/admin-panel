@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
-import { Input, FileInput } from "../../components/InputFields";
+import { Input } from "../../components/InputFields";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
 import { UnversityService } from "../../services/UniversityService";

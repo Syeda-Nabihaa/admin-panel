@@ -16,3 +16,28 @@ export function BadgeCard({ img, name, date, onClick }) {
   </div>
     )
 }
+
+export function InfoCard({label , title , icon}){
+  return (
+
+  
+   <div className="group p-4 bg-linear-to-r from-dark to-indigo rounded-lg  hover:border-blue-200 transition-all duration-200 hover:shadow-sm">
+      <div className="flex items-start justify-between">
+        <div className="flex items-start gap-3">
+          <div className="p-2 bg-blue-50 rounded-lg">
+            {icon}
+          </div>
+          <div>
+            <p className="text-sm text-gray-500 mb-1 flex items-center gap-1">
+             {label}
+            </p>
+            <p className="font-medium text-white">
+             {title}
+            </p>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+    )
+}
