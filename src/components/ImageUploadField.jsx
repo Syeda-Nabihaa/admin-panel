@@ -83,7 +83,7 @@ export default function ImageUploadField({
       {label && (
         <label
           htmlFor={name}
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className="block text-sm font-medium text-white mb-2"
         >
           {label}
         </label>
@@ -162,7 +162,7 @@ export default function ImageUploadField({
 
       {/* Helper text */}
       {!preview && !uploading && (
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-white">
           {defaultimage ? "Click to change image" : "Click to upload image"}
         </p>
       )}

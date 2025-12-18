@@ -6,6 +6,8 @@ import { Heading, SubText } from "../../../components/Typography";
 import { MdEdit } from "react-icons/md";
 import { Button } from "../../../components/Button";
 import { AddbadWords } from "../../../components/Modal";
+import MainSection from "../../../components/MainSection";
+import { Td, Th, Tr } from "../../../components/TableComponents";
 
 export default function BanWords() {
   const service = new banwordsService();
@@ -46,80 +48,37 @@ export default function BanWords() {
           <Loader />
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          {/* Header */}
-          <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-r from-gray-50 to-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <Heading title="Bad Words" />
-                <SubText text="All bad words" />
-              </div>
-              <Button
-                title="Add Ban Words"
-                onClick={() => {
+        <MainSection btntext="Add ban Words"  onClick={() => {
                   setOpenModal(true);
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Table */}
-          <div className="overflow-x-auto">
+                }} heading="Ban Words" subText="All list of ban words"> 
+  <div className="overflow-x-auto">
             <table className="min-w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-linear-to-r from-gray-900 to-gray-800/50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    S.no
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    words
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    Category
-                  </th>
-                  <th className="px-6 py-3 text-center text-sm font-semibold text-gray-600">
-                    Action
-                  </th>
+                  <Th text="S.no"/>
+                  <Th text="Words"/>
+                  <Th text="Category"/>
+                  <Th text="Action"/>
+                 
                 </tr>
               </thead>
 
-              <tbody className="bg-white divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-800">
                 {banwords.map((d, index) => (
-                  <tr
-                    key={d.id}
-                    className="hover:bg-gray-50 transition-all duration-150"
-                  >
-                    {/* S.no */}
-                    <td className="px-6 py-4 text-sm text-gray-700 font-medium">
-                      {index + 1}
-                    </td>
-
-                    {/* Degree Name */}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="text-sm font-medium text-gray-900">
-                          {d.word}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="text-sm font-medium text-gray-900">
-                          {d.category}
-                        </div>
-                      </div>
-                    </td>
-
-                    {/* Action */}
+                  <Tr id={d.id}>
+                    <Td text={index+1}/>
+                    <Td text= {d.word}/>
+                    <Td text={d.category}/>
                     <td className="px-6 py-4">
-                      <div className="flex justify-center">
+                      <div className="flex ">
                         <button onClick={() => handleEditWords(d)}>
-                          <MdEdit />
+                          <MdEdit className="text-white" />
                         </button>
                         {/* <ActionButtons editLink={`/degree/${d.id}`} /> */}
                       </div>
                     </td>
-                  </tr>
+                  </Tr>
+            
                 ))}
               </tbody>
             </table>
@@ -135,7 +94,9 @@ export default function BanWords() {
               loading={loading}
             />
           </div>
-        </div>
+        </MainSection>
+        
+        
       )}
     </div>
   );

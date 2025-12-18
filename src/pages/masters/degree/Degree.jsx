@@ -7,6 +7,8 @@ import { Link, useParams } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import { AddDegreeModal } from "../../../components/Modal";
 import { MdEdit } from "react-icons/md";
+import MainSection from "../../../components/MainSection";
+import { Td, Th, Tr } from "../../../components/TableComponents";
 
 export default function Degree() {
   const service = new DegreeService();
@@ -45,72 +47,39 @@ export default function Degree() {
           <Loader />
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          {/* Header */}
-          <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-r from-gray-50 to-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <Heading title="Degree" />
-                <SubText text="All Degree" />
-              </div>
-
-              <Button
-                title="Add Degree"
-                onClick={() => {
-                  setOpenModal(true);
-                  setSelectedDegree(null);
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Table */}
+        <MainSection
+          btntext="Add degree"
+          heading="Degree"
+          subText="All degree"
+          onClick={() => {
+            setOpenModal(true);
+            setSelectedDegree(null);
+          }}
+        >
           <div className="overflow-x-auto">
             <table className="min-w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-linear-to-r from-gray-900 to-gray-800/50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    S.no
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    Name
-                  </th>
-                  <th className="px-6 py-3 text-center text-sm font-semibold text-gray-600">
-                    Action
-                  </th>
+                  <Th text="S.no" />
+                  <Th text="Name" />
+                  <Th text="Action" />
                 </tr>
               </thead>
 
-              <tbody className="bg-white divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-800">
                 {degree.map((d, index) => (
-                  <tr
-                    key={d.id}
-                    className="hover:bg-gray-50 transition-all duration-150"
-                  >
-                    {/* S.no */}
-                    <td className="px-6 py-4 text-sm text-gray-700 font-medium">
-                      {index + 1}
-                    </td>
-
-                    {/* Degree Name */}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="text-sm font-medium text-gray-900">
-                          {d.degree_name}
-                        </div>
-                      </div>
-                    </td>
-
-                    {/* Action */}
+                  <Tr id={d.id}>
+                    <Td text={index + 1} />
+                    <Td text={d.degree_name} />
                     <td className="px-6 py-4">
-                      <div className="flex justify-center">
+                      <div className="flex ">
                         <button onClick={() => handleEditDegree(d)}>
-                          <MdEdit />
+                          <MdEdit className="text-white" />
                         </button>
                         {/* <ActionButtons editLink={`/degree/${d.id}`} /> */}
                       </div>
                     </td>
-                  </tr>
+                  </Tr>
                 ))}
               </tbody>
             </table>
@@ -126,7 +95,7 @@ export default function Degree() {
               loading={loading}
             />
           </div>
-        </div>
+        </MainSection>
       )}
     </>
   );

@@ -344,9 +344,14 @@ export function SidebarDemo() {
       </Sidebar>
 
       {/* Content Area */}
-      <div className="flex-1 bg-white overflow-y-auto p-5">
-        <Outlet />
-      </div>
+<div className="flex-1 overflow-y-auto p-5
+ bg-dark">
+  <Outlet />
+</div>
+
+
+
+
     </div>
   );
 }

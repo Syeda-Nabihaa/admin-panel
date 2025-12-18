@@ -3,10 +3,10 @@ import {Button} from "../../components/Button";
 import { Input, FileInput } from "../../components/InputFields";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
-import { UnversityService } from "../../services/UniversityService";
 import { environment } from "../../environment/environment";
 import { addUserSchema } from "../../services/validation/ZodSchema";
 import { UserService } from "../../services/UserService";
+import { Heading, SubText } from "../../components/Typography";
 
 const AddUser = () => {
   const service = new UserService();
@@ -41,22 +41,20 @@ const AddUser = () => {
       console.log("✅ Response Added:", response);
       reset();
     } catch (error) {
-      console.error("❌ Error adding university:", error);
-      alert("Failed to add university");
+      console.error("❌ Error adding user:", error);
+      alert("Failed to add user");
     }
   }
 
 
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 max-w-4xl mx-auto">
+    <div className="bg-dark rounded-lg shadow-sm border border-gray-200 p-6 max-w-4xl mx-auto">
       {/* Form Header */}
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-800">
-          Add User
-        </h2>
-        <p className="text-sm text-gray-600 mt-1">Add a new User</p>
-      </div>
+             <Heading title={ "Add user"} />
+             <SubText text="Add user" />
+           </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit(submit)}>
@@ -64,7 +62,7 @@ const AddUser = () => {
           {/* Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 First Name *
               </label>
               <Input
@@ -74,11 +72,11 @@ const AddUser = () => {
                 placeholder="Enter First Name"
               />
               {errors.first_name && (
-                <p className="text-red-500 text-sm">{errors.first_name.message}</p>
+                <p className="text-error text-sm">{errors.first_name.message}</p>
               )}
             </div>
               <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 last Name *
               </label>
               <Input
@@ -88,12 +86,12 @@ const AddUser = () => {
                 placeholder="Enter last name "
               />
               {errors.last_name && (
-                <p className="text-red-500 text-sm">{errors.last_name.message}</p>
+                <p className="text-error text-sm">{errors.last_name.message}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Email *
               </label>
               <Input
@@ -103,7 +101,7 @@ const AddUser = () => {
                 placeholder="Enter Email"
               />
               {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email.message}</p>
+                <p className="text-error text-sm">{errors.email.message}</p>
               )}
             </div>
                
@@ -111,7 +109,7 @@ const AddUser = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Password*
               </label>
               <Input
@@ -121,14 +119,14 @@ const AddUser = () => {
                 placeholder="Enter Password"
               />
               {errors.password && (
-                <p className="text-red-500 text-sm">
+                <p className="text-error text-sm">
                   {errors.password.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Confirm Password *
               </label>
               <Input
@@ -138,7 +136,7 @@ const AddUser = () => {
                 placeholder="Confirm Password"
               />
               {errors.confirmPassword && (
-                <p className="text-red-500 text-sm">
+                <p className="text-error text-sm">
                   {errors.confirmPassword.message}
                 </p>
               )}
@@ -150,7 +148,7 @@ const AddUser = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 logo *
               </label>
               <FileInput register={register} name="logo" />

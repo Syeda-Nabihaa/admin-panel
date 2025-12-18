@@ -65,7 +65,7 @@ export default function ViewUniversity() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className=" rounded-lg shadow-sm  overflow-hidden">
       {loading ? (
         <div className="flex justify-center items-center py-20">
           <Loader />
@@ -73,7 +73,7 @@ export default function ViewUniversity() {
       ) : university ? (
         <>
           {/* Header */}
-          <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-r from-gray-50 to-white">
+          <div className="px-6 py-5 border-b border-gray-700">
             <div className="flex items-center justify-between">
               <div>
                 <Heading title={university.name} />
@@ -92,7 +92,7 @@ export default function ViewUniversity() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Left Column */}
               <div className="space-y-6">
-                <div className="bg-gray-50 rounded-lg p-5">
+                <div className="bg-linear-to-r from-dark to-indigo rounded-lg p-5">
                   <IconHeading
                     icon={<IoIosContact />}
                     text="  Contact Information"
@@ -124,7 +124,7 @@ export default function ViewUniversity() {
 
               {/* Right Column */}
               <div className="space-y-6">
-                <div className="bg-gray-50 rounded-lg p-5">
+                <div className="bg-linear-to-r from-dark to-indigo  rounded-lg p-5">
                   <IconHeading
                     icon={<IoLocationOutline />}
                     text="  Campus Information"
@@ -145,28 +145,28 @@ export default function ViewUniversity() {
 
                 {/* Stats Cards */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                  <div className="bg-linear-to-r from-dark to-indigo   rounded-lg p-4">
                     <div className="flex items-center">
                       <div className="bg-blue-100 p-2 rounded-lg mr-3">
                         <HiMiniUsers className="text-blue-400 w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-600">Total Students</p>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-white">
                           {university.totalStudents?.toLocaleString() || 0}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-green-50 border border-green-100 rounded-lg p-4">
+                  <div className="bg-linear-to-r from-dark to-indigo rounded-lg p-4">
                     <div className="flex items-center">
                       <div className="bg-green-100 p-2 rounded-lg mr-3">
                         <MdVerifiedUser className="text-green-400 w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-600">Verified Users</p>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-white">
                           {university.verifiedUsers || 0}
                         </p>
                       </div>
@@ -175,7 +175,7 @@ export default function ViewUniversity() {
                 </div>
               </div>
             </div>
-            <div className="p-6 bg-gray-50 mt-5">
+            <div className="p-6  mt-5">
               <Heading title="All Badges" />
 
               <div className="flex gap-5 mt-6">
@@ -191,7 +191,7 @@ export default function ViewUniversity() {
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-8 pt-6 border-t border-gray-200 flex space-x-4">
+            <div className="mt-8 pt-6  flex space-x-4">
               <Link to={`/edituniversity/${university.id}`}>
                 <Button title="Edit" />
               </Link>

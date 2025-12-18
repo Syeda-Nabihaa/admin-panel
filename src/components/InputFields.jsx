@@ -30,9 +30,10 @@ const StyledWrapper = styled.div`
     padding-left: 0.8em;
     outline: none;
     overflow: hidden;
-    background-color: #f3f3f3;
+    background-color: #494949;
     border-radius: 10px;
     transition: all 0.5s;
+    color:white
   }
 
   .input:hover,
@@ -40,5 +41,8 @@ const StyledWrapper = styled.div`
     border: 2px solid #4a9dec;
     box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
     background-color: white;
+        color:black
+
   }
+
 `;

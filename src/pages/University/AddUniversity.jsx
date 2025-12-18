@@ -61,23 +61,7 @@ const AddUniversity = () => {
     if (error) {
       console.log(error);
     }
-    // try {
-    //   const response = await service.getUniversitybyiD(id);
-    //   const data = response?.data;
-    //   console.log(response.data);
-    //   reset({
-    //     email: data.user?.email || "-",
-    //     role: data.user?.role || "-",
-    //     name: data.name || "-",
-    //     logo: data.logo,
-    //     domain: data.domain || "-",
-    //     location: data.location || "-",
-    //     totalStudents: data.totalStudents || "-",
-    //     verifiedUsers: data.verifiedUsers || "-",
-    //   });
-    // } catch (error) {
-    //   console.log("Error fetching single university", error);
-    // }
+   
   }
 
   useEffect(() => {
@@ -132,14 +116,14 @@ const AddUniversity = () => {
   // }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 max-w-4xl mx-auto">
+    <div className="bg-dark rounded-lg shadow-sm border border-gray-700 p-6 max-w-4xl mx-auto">
       {/* Form Header */}
       <div className="mb-6">
         <Heading title={id ? "Edit University" : "Add University"} />
         <SubText text="add university" />
       </div>
     {error && (
-        <p className="text-red-600 bg-red-100 p-2 rounded mt-2 mb-4">{error.text}</p>
+        <p className="text-white bg-error p-2 rounded mt-2 mb-4">{error.text}</p>
       )}
       {/* Form */}
       <form onSubmit={handleSubmit(submit)}>
@@ -147,7 +131,7 @@ const AddUniversity = () => {
           {/* Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 University Name *
               </label>
               <Input
@@ -157,12 +141,12 @@ const AddUniversity = () => {
                 placeholder="e.g., Bahria University Community"
               />
               {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name.message}</p>
+                <p className="text-error text-sm">{errors.name.message}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Email *
               </label>
 
@@ -174,14 +158,14 @@ const AddUniversity = () => {
                 placeholder="Enter Email"
               />
               {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email.message}</p>
+                <p className="text-error text-sm">{errors.email.message}</p>
               )}
             </div>
           </div>
           {!id && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Password*
                 </label>
                 <Input
@@ -191,14 +175,14 @@ const AddUniversity = () => {
                   placeholder="Enter Password"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-error text-sm">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Confirm Password *
                 </label>
                 <Input
@@ -208,7 +192,7 @@ const AddUniversity = () => {
                   placeholder="Confirm Password"
                 />
                 {errors.confirmPassword && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-error text-sm">
                     {errors.confirmPassword.message}
                   </p>
                 )}
@@ -217,7 +201,7 @@ const AddUniversity = () => {
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 University Domain *
               </label>
               <Input
@@ -227,11 +211,11 @@ const AddUniversity = () => {
                 placeholder="Enter University Domain"
               />
               {errors.domain && (
-                <p className="text-red-500 text-sm">{errors.domain.message}</p>
+                <p className="text-error text-sm">{errors.domain.message}</p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Location*
               </label>
               <Input
@@ -241,7 +225,7 @@ const AddUniversity = () => {
                 placeholder="Enter Location"
               />
               {errors.location && (
-                <p className="text-red-500 text-sm">
+                <p className="text-error text-sm">
                   {errors.location.message}
                 </p>
               )}
@@ -261,7 +245,7 @@ const AddUniversity = () => {
               />
 
               {errors.logo && (
-                <p className="text-red-500 text-sm">{errors.logo.message}</p>
+                <p className="text-error text-sm">{errors.logo.message}</p>
               )}
             </div>
           </div>

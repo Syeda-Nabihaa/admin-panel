@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Button({ title, onClick }) {
   return (
     <StyledWrapper>
-      <button type="submit" onClick={onClick}>
+      <button type="submit" onClick={onClick} className= "bg-linear-to-r from-indigo to-indigo">
         {title}
       </button>
     </StyledWrapper>
@@ -19,31 +19,27 @@ const StyledWrapper = styled.div`
     border-radius: 30px;
     cursor: pointer;
     border: 0;
-    background-color: #000; /* black button */
-    color: #fff; /* white text */
-    box-shadow: rgba(0, 0, 0, 0.15) 0 0 6px;
+    color: #fff;
     letter-spacing: 1px;
     text-transform: uppercase;
     font-size: 13px;
-    transition: all 0.4s ease;
+    transition: all 0.35s ease;
   }
 
   button:hover {
     letter-spacing: 2px;
-    background-color: #111; /* slightly lighter black */
-    color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 18px; /* black hover shadow */
+    box-shadow: rgba(79, 70, 229, 0.45) 0px 10px 30px
+    transform: translateY(-2px);
   }
 
   button:active {
-    letter-spacing: 2px;
-    background-color: #111;
-    color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 0px;
-    transform: translateY(6px);
-    transition: 100ms;
+    letter-spacing: 1.5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 10px;
+    transform: translateY(2px);
+    transition: 120ms;
   }
 `;
+
 
 function ActionButtons({ viewLink, editLink, onDelete , className }) {
   return (

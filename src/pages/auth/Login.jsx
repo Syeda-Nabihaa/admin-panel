@@ -8,6 +8,7 @@ import { loginSchema } from "../../services/validation/ZodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Helper from "../../helper/Helper";
 import { Button } from "../../components/Button";
+import { Heading, SubText } from "../../components/Typography";
 
 export default function Login() {
   const service = new AuthService();
@@ -46,21 +47,19 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-r from-dark to-indigo flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         {/* Logo/Header Section */}
         <div className="text-center mb-8">
           <div className="mx-auto w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-4">
             <span className="text-white font-bold text-xl">A</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome Back
-          </h1>
-          <p className="text-gray-600">Sign in to your account to continue</p>
+          <Heading title="Welcome Back"/>
+          <SubText text="Sign in to your account to continue"/>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-dark rounded-2xl shadow-xl p-8">
           <form onSubmit={handleSubmit(handlesubmit)}>
             <div className="space-y-6">
               <Input

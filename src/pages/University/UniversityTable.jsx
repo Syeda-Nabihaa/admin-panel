@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { UnversityService } from "../../services/UniversityService";
 import { useApi } from "../../helper/UseApi";
 import Loader from "../../components/Loader";
+import MainSection from "../../components/MainSection";
+import { Td, Th, Tr } from "../../components/TableComponents";
 
 const UniversityTable = () => {
   const service = new UnversityService();
@@ -32,88 +34,55 @@ const UniversityTable = () => {
         <div className="flex justify-center items-center py-20">
           <Loader />
         </div>
-      ) : university.length>0 ? (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center">
-            <div>
-              <Heading title="University Campuses" />
-              <SubText text="University campuses registered" />
-            </div>
-
-            <Link to="/adduniversity" className="ml-auto">
-              <Button title="Add University" />
-            </Link>
-          </div>
-
-          {/* Table */}
+      ) : university.length > 0 ? (
+        <MainSection
+          btntext="Add University"
+          heading="University"
+          subText="All universities"
+          to="/adduniversity"
+        >
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-linear-to-r from-gray-900 to-gray-800/50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    University
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Domain
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Location
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Students
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Verified Users
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
+                  <Th text="University" />
+                  <Th text="Email" />
+                  <Th text="Domain" />
+                  <Th text="Location" />
+                  <Th text="Students" />
+                  <Th text="Verified Users" />
+                  <Th text="Actions" />
                 </tr>
               </thead>
 
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-800">
                 {university.map((u) => (
-                  <tr
-                    key={u.id}
-                    className="hover:bg-gray-50 transition-colors duration-150"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
+                  <Tr key={u.id}>
+                    <td className="px-8 py-5">
                       <div className="flex items-center">
-                        <img
-                          src={u.logo}
-                          alt="University logo"
-                          className="h-10 w-10 rounded-full object-cover border border-gray-200"
-                        />
-                        <div className="ml-4 text-sm font-medium text-gray-900">
-                          {u.name}
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-linear-to-r from-dark to-indigo rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
+                          <img
+                            src={u.logo}
+                            alt={`${u.name} logo`}
+                            className="relative h-12 w-12 rounded-full object-cover border-2 border-dark group-hover:border-indigo transition-all duration-300"
+                          />
+                        </div>
+                        <div className="ml-4">
+                          <div className="text-base font-semibold text-white group-hover:text-blue-300 transition-colors">
+                            {u.name}
+                          </div>
+                          <div className="text-xs text-gray-400 mt-0.5">
+                            ID: {u.id}
+                          </div>
                         </div>
                       </div>
                     </td>
-
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {u.user?.email}
-                    </td>
-
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {u.domain}
-                    </td>
-
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {u.location}
-                    </td>
-
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {u.totalStudents}
-                    </td>
-
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {u.verifiedUsers}
-                    </td>
-
+                    <Td text={u.user?.email} />
+                    <Td text={u.domain} />
+                    <Td text={u.location} />
+                    <Td text={u.totalStudents} />
+                    <Td text={u.verifiedUsers} />
                     <td className="p-4">
                       <div className="flex justify-center space-x-2">
                         <ActionButtons
@@ -122,13 +91,12 @@ const UniversityTable = () => {
                         />
                       </div>
                     </td>
-                  </tr>
+                  </Tr>
                 ))}
               </tbody>
-
             </table>
           </div>
-        </div>
+        </MainSection>
       ) : (
         <div className="text-center py-12">
           <svg
@@ -144,17 +112,17 @@ const UniversityTable = () => {
               d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <h3 className="mt-4 text-lg font-medium text-gray-900">
+          <h3 className="mt-4 text-lg font-medium text-white">
             No university found
           </h3>
-          <p className="mt-1 text-gray-500">
+          <p className="mt-1 text-white">
             Unable to load university details. Please try again.
           </p>
           <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
             Retry
           </button>
         </div>
-      )  }
+      )}
     </>
   );
 };
