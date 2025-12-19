@@ -57,7 +57,7 @@ const UniversityTable = () => {
 
               <tbody className="divide-y divide-gray-800">
                 {university.map((u) => (
-                  <Tr key={u.id}>
+                  <Tr id={u.id}>
                     <td className="px-8 py-5">
                       <div className="flex items-center">
                         <div className="relative">
@@ -72,9 +72,7 @@ const UniversityTable = () => {
                           <div className="text-base font-semibold text-white group-hover:text-blue-300 transition-colors">
                             {u.name}
                           </div>
-                          <div className="text-xs text-gray-400 mt-0.5">
-                            ID: {u.id}
-                          </div>
+                         
                         </div>
                       </div>
                     </td>

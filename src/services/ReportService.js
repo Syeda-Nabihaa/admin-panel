@@ -18,16 +18,25 @@ export class ReportService {
   }
 
   async getreportbyiD(id) {
-    return await BaseService.post(
+    return await BaseService.get(
       `${AllApiEndPoints.report}/${id}`,
 
       "Cannnot fetch report"
     );
   }
-  
+
   async updatereport(id, body) {
     return await BaseService.put(
       `${AllApiEndPoints.report}/${id}`,
+      body,
+      "Cannnot Add report"
+    );
+  }
+
+  //--------------- Ban USerrrrrr -------------------------------
+  async banUser(id, body) {
+    return await BaseService.patch(
+      `${AllApiEndPoints.banUser}/${id}`,
       body,
       "Cannnot Add report"
     );

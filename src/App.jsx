@@ -49,6 +49,7 @@ import Master from "./pages/masters/Master";
 import Degree from "./pages/masters/degree/Degree";
 import AddDegree from "./pages/masters/degree/AddDegree";
 import Reports from "./pages/reports/Reports";
+import ViewReports from "./pages/reports/ViewReports";
 // import AddStudents from "./pages/students/Addstudents";
 
 function App() {
@@ -82,6 +83,8 @@ function App() {
             <Route path="/adddegree" element={<AddDegree />} />
          {/*--------------------------------- Reports --------------------------------- */}
                     <Route path="/reports" element={<Reports />} />
+         {/*--------------------------------- Reports --------------------------------- */}
+                    <Route path="/report/:id" element={<ViewReports />} />
 
            {/*--------------------------------- Master Page --------------------------------- */}
              <Route path="/master" element={<Master />} />

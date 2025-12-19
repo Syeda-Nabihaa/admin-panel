@@ -37,6 +37,20 @@ class baseService {
     }
   }
 
+    async patch(url, body, errMsg) {
+    try {
+      const response = await axiosInstance.patch(url, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch {
+      console.log(errMsg);
+    }
+  }
+
+
   async delete(url, errMsg) {
     try {
       const response = await axiosInstance.delete(url);

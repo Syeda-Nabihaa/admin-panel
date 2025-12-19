@@ -4,6 +4,10 @@ import { useApi } from "../../helper/UseApi";
 import Loader from "../../components/Loader";
 import { Heading, SubText } from "../../components/Typography";
 import { MdEdit } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import MainSection from "../../components/MainSection";
+import { Td, Th, Tr } from "../../components/TableComponents";
 
 export default function Reports() {
   const service = new ReportService();
@@ -24,13 +28,6 @@ export default function Reports() {
       console.log(error);
     }
   }
-  //   function handleEditreport(report) {
-  //     setSelectedreport({
-  //       id: report.id, // important for edit
-  //       report_name: report.report_name,
-  //     });
-  //     setOpenModal(true);
-  //   }
 
   useEffect(() => {
     getAlldata();
@@ -42,83 +39,28 @@ export default function Reports() {
           <Loader />
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          {/* Header */}
-          <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-r from-gray-50 to-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <Heading title="Report" />
-                <SubText text="All Report" />
-              </div>
-
-              {/* <Button
-                title="Add report"
-                onClick={() => {
-                  setOpenModal(true);
-                  setSelectedreport(null);
-                }}
-              /> */}
-            </div>
-          </div>
-
-          {/* Table */}
+        <MainSection heading="Report" subText="All Report">
           <div className="overflow-x-auto">
             <table className="min-w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-linear-to-r from-gray-900 to-gray-800/50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    S.no
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    Reported User
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    Reported By
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    Reason
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">
-                    Description
-                  </th>
-                  <th className="px-6 py-3 text-center text-sm font-semibold text-gray-600">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-center text-sm font-semibold text-gray-600">
-                    Action
-                  </th>
+                  <Th text="S.no" />
+                  <Th text=" Reported User" />
+                  <Th text=" Reported By" />
+                  <Th text=" Reason" />
+                  <Th text=" Description" />
+                  <Th text=" Status" />
+                  <Th text=" Action" />
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-800">
                 {report.map((d, index) => (
-                  <tr
-                    key={d.id}
-                    className="hover:bg-gray-50 transition-all duration-150"
-                  >
-                    {/* S.no */}
-                    <td className="px-6 py-4 text-sm text-gray-700 font-medium">
-                      {index + 1}
-                    </td>
-
-                    {/* Reported User */}
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      {d.reportedUser?.email}
-                    </td>
-
-                    {/* Reported By */}
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      {d.reportedBy?.email}
-                    </td>
-
-                    {/* Reason */}
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      {d.reason}
-                    </td>
-                      <td className="px-6 py-4 text-sm text-gray-700">
-                      {d.description}
-                    </td>
-
-                    {/* Status */}
+                  <Tr id={d.id}>
+                    <Td text={index + 1} />
+                    <Td text={d.reportedUser?.email} />
+                    <Td text={d.reportedBy?.email} />
+                    <Td text={d.reason} />
+                    <Td text={d.description} />
                     <td className="px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium
@@ -131,16 +73,17 @@ export default function Reports() {
                         {d.status}
                       </span>
                     </td>
-
-                    {/* Action */}
                     <td className="px-6 py-4">
                       <div className="flex justify-center gap-3">
                         <button onClick={() => handleEditreport(d)}>
-                          <MdEdit />
+                          <MdEdit className="text-white" />
                         </button>
+                        <Link to={`/report/${d.id}`}>
+                          <FaEye className="text-white" />
+                        </Link>
                       </div>
                     </td>
-                  </tr>
+                  </Tr>
                 ))}
               </tbody>
             </table>
@@ -156,7 +99,7 @@ export default function Reports() {
               loading={loading}
             /> */}
           </div>
-        </div>
+        </MainSection>
       )}
     </>
   );

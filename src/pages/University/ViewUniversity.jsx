@@ -24,7 +24,6 @@ export default function ViewUniversity() {
   const service = new UnversityService();
   const { request, loading, error } = useApi(service);
 
-  const badgeservice = new BadgeService();
 
   // const [loading, setloading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
@@ -41,14 +40,7 @@ export default function ViewUniversity() {
     if (error) {
       console.log(error);
     }
-    // try {
-    //   const res = await service.getUniversitybyiD(id);
-    //   setUniversity(res?.data);
-    //   console.log(res.data);
-    //   setloading(false);
-    // } catch (error) {
-    //   console.error("error fetching university", error);
-    // }
+  
   }
   useEffect(() => {
     getUniByid(id);
