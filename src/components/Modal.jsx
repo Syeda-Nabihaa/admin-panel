@@ -9,6 +9,8 @@ import { BadgeService } from "../services/BadgeService";
 import { useApi } from "../helper/UseApi";
 import { DegreeService } from "../services/DegreeService";
 import { banwordsService } from "../services/BanWordsService";
+import { Heading } from "./Typography";
+import { Button } from "./Button";
 
 export function AddBadgeModal({ open, onClose, id, initialData = null }) {
   const service = new BadgeService();
@@ -46,33 +48,6 @@ export function AddBadgeModal({ open, onClose, id, initialData = null }) {
     }
   }, [initialData, reset]);
 
-  // async function Submit(data) {
-  //   try {
-  //     if (isEditMode && initialData?.id) {
-  //       // Edit mode - update existing badge
-  //       await service.updatebadge(initialData.id, {
-  //         badge_name: data.badge_name,
-  //         condition_date: data.condition_date,
-  //         badge_url: data.badge_url,
-  //         universityId: parseInt(id),
-  //       });
-  //       console.log("✅ Badge updated:", data);
-  //     } else {
-  //       // Add mode - create new badge
-  //       await service.addBadge({
-  //         badge_name: data.badge_name,
-  //         condition_date: data.condition_date,
-  //         badge_url: data.badge_url,
-  //         universityId: parseInt(id),
-  //       });
-  //       console.log("✅ Badge added:", data);
-  //     }
-  //     reset();
-  //     onClose();
-  //   } catch (error) {
-  //     console.log("Error:", error);
-  //   }
-  // }
   async function Submit(data) {
     try {
       if (isEditMode && initialData?.id) {
@@ -104,7 +79,7 @@ export function AddBadgeModal({ open, onClose, id, initialData = null }) {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-      <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6 relative">
+      <div className="bg-linear-to-r from-dark to-indigo w-full max-w-md rounded-xl shadow-lg p-6 relative">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
@@ -167,6 +142,11 @@ export function AddBadgeModal({ open, onClose, id, initialData = null }) {
               <p className="text-red-500 text-sm">{errors.badge_url.message}</p>
             )}
           </div>
+          {error && (
+            <p className="text-white bg-error p-2 rounded mt-2 mb-4">
+              {error.text}
+            </p>
+          )}
 
           {/* Save button */}
           <button
@@ -223,12 +203,12 @@ export function AddDegreeModal({
         await request("updatedegree", initialData.id, {
           degree_name: data.degree_name,
         });
-        alert("Error updating degree",error)
+        alert("Error updating degree", error);
       } else {
         await request("adddegree", {
           degree_name: data.degree_name,
         });
-        alert("Error updating degree",error)
+        alert("Error updating degree", error);
       }
 
       reset();
@@ -244,22 +224,19 @@ export function AddDegreeModal({
 
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-      <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6 relative">
+      <div className="bg-indigo w-full max-w-md rounded-xl shadow-lg p-6 relative">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
         >
           ✕
         </button>
+        <Heading title={isEditMode ? "Edit degree" : "Add New degree"} />
 
-        <h2 className="text-xl font-semibold mb-4">
-          {isEditMode ? "Edit degree" : "Add New degree"}
-        </h2>
-
-        <form onSubmit={handleSubmit(Submit)} className="space-y-4">
+        <form onSubmit={handleSubmit(Submit)} className="space-y-4 mt-3">
           {/* Badge Name */}
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="block text-sm text-white font-medium mb-1">
               Degree Name
             </label>
             <Input
@@ -275,33 +252,30 @@ export function AddDegreeModal({
               </p>
             )}
           </div>
-
+          {error && (
+            <p className="text-white bg-error p-2 rounded mt-2 mb-4">
+              {error.text}
+            </p>
+          )}
           {/* Save button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-          >
-            {isEditMode
-              ? loading
-                ? "Updating Degree..."
-                : "Update degree"
-              : loading
-              ? "Saving.."
-              : "Save Degree"}
-          </button>
+          <Button
+            title={
+              isEditMode
+                ? loading
+                  ? "Updating Degree..."
+                  : "Update degree"
+                : loading
+                ? "Saving.."
+                : "Save Degree"
+            }
+          />
         </form>
       </div>
     </div>
   );
 }
 
-
-export function AddbadWords({
-  open,
-  onClose,
-  initialData = null,
-  onSuccess,
-}) {
+export function AddbadWords({ open, onClose, initialData = null, onSuccess }) {
   const service = new banwordsService();
   const [isEditMode, setIsEditMode] = useState(false);
   const { request, loading, error } = useApi(service);
@@ -329,7 +303,7 @@ export function AddbadWords({
 
       reset({
         word: "",
-        category:""
+        category: "",
       });
     }
   }, [initialData, reset]);
@@ -341,13 +315,13 @@ export function AddbadWords({
           word: data.word,
           category: data.category,
         });
-        alert("Error updating ban words",error)
+        alert("Error updating ban words", error);
       } else {
         await request("addbanwords", {
           word: data.word,
           category: data.category,
         });
-        alert("Error updating banwords",error)
+        alert("Error updating banwords", error);
       }
 
       reset();
@@ -378,9 +352,7 @@ export function AddbadWords({
         <form onSubmit={handleSubmit(Submit)} className="space-y-4">
           {/* Badge Name */}
           <div>
-            <label className="block text-sm font-medium mb-1">
-              Ban Word
-            </label>
+            <label className="block text-sm font-medium mb-1">Ban Word</label>
             <Input
               register={register}
               placeholder="Enter bad word"
@@ -389,15 +361,11 @@ export function AddbadWords({
               required
             />
             {errors.word && (
-              <p className="text-red-500 text-sm">
-                {errors.word.message}
-              </p>
+              <p className="text-red-500 text-sm">{errors.word.message}</p>
             )}
           </div>
-           <div>
-            <label className="block text-sm font-medium mb-1">
-              Category
-            </label>
+          <div>
+            <label className="block text-sm font-medium mb-1">Category</label>
             <Input
               register={register}
               placeholder="Enter bad word"
@@ -406,12 +374,14 @@ export function AddbadWords({
               required
             />
             {errors.category && (
-              <p className="text-red-500 text-sm">
-                {errors.category.message}
-              </p>
+              <p className="text-red-500 text-sm">{errors.category.message}</p>
             )}
           </div>
-
+          {error && (
+            <p className="text-white bg-error p-2 rounded mt-2 mb-4">
+              {error.text}
+            </p>
+          )}
           {/* Save button */}
           <button
             type="submit"

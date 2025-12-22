@@ -74,7 +74,7 @@ export function SidebarDemo() {
         <IconBuilding className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
-     {
+    {
       label: "Reports",
       to: "/reports",
       icon: (
@@ -344,14 +344,12 @@ export function SidebarDemo() {
       </Sidebar>
 
       {/* Content Area */}
-<div className="flex-1 overflow-y-auto p-5
- bg-dark">
-  <Outlet />
-</div>
-
-
-
-
+      <div
+        className="flex-1 overflow-y-auto p-5
+ bg-dark"
+      >
+        <Outlet />
+      </div>
     </div>
   );
 }

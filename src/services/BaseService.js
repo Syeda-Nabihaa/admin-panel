@@ -19,9 +19,9 @@ class baseService {
         },
       });
       return response.data;
-    } catch(error) {
+    } catch (error) {
       console.log(errMsg);
-        throw error;
+      throw error;
     }
   }
   async put(url, body, errMsg) {
@@ -31,13 +31,15 @@ class baseService {
           "Content-Type": "application/json",
         },
       });
+
       return response.data;
-    } catch {
+    } catch (error) {
       console.log(errMsg);
+      throw error;
     }
   }
 
-    async patch(url, body, errMsg) {
+  async patch(url, body, errMsg) {
     try {
       const response = await axiosInstance.patch(url, body, {
         headers: {
@@ -45,18 +47,19 @@ class baseService {
         },
       });
       return response.data;
-    } catch {
+    } catch (error) {
       console.log(errMsg);
+      throw error;
     }
   }
-
 
   async delete(url, errMsg) {
     try {
       const response = await axiosInstance.delete(url);
       return response.data;
-    } catch {
+    } catch (error) {
       console.log(errMsg);
+      throw error;
     }
   }
 }

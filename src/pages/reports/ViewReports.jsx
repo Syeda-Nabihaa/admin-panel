@@ -27,13 +27,17 @@ export default function ViewReports() {
     }
   }
   async function banUser(id) {
-    const data = await request("banUser", id, { status: "Block" });
+    const data = await request("reportUser", id , {status:"Block"});
 
     if (data) {
       setreport(data);
-      console.log("data", data);
+      console.log("data", data.data);
 
+     
       loading;
+  //        if (res?.error) {
+  //   return;
+  // }
     }
 
     if (error) {
@@ -43,6 +47,7 @@ export default function ViewReports() {
   useEffect(() => {
     getreportbyID(id);
   }, [id]);
+
   return (
     <div className="bg-dark rounded-2xl p-6 space-y-6 shadow-lg border border-white/10">
       <div className="px-6 py-5 border-b border-gray-700">
@@ -54,6 +59,9 @@ export default function ViewReports() {
         </div>
       </div>
       {/* Reported By */}
+       {error && (
+        <p className="text-white bg-error p-2 rounded mt-2 mb-4">{error.text}</p>
+      )}
       <div>
         <h3 className="text-sm font-semibold text-indigo-400 mb-3 uppercase tracking-wide">
           Reported By
@@ -139,8 +147,9 @@ export default function ViewReports() {
           label="Email"
           icon={<MdEmail />}
         />
+        <p className="text-white">{report.reportedUserId}</p>
       </div>
-      <Button title="Ban User" onClick={() => banUser(report.id, "Block")} />
+      <Button title="Ban User" onClick={() => banUser(report.id)} />
     </div>
   );
 }

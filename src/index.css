@@ -6,11 +6,12 @@ html , body{
 @theme {
   --color-indigo: #1A0B2E; 
   --color-dark: #0D0D0F; 
+  --color-purple:#6A3DAF;
 
 
   --color-success: #22c55e;
   --color-warning: #f59e0b;
-  --color-error: #FF0000;
+  --color-error: #840000;
   --color-neutral: #6b7280;
 
  

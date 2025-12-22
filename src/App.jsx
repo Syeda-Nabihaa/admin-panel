@@ -47,7 +47,6 @@ import AllRoles from "./pages/users/AllRoles";
 import VerifyToken from "./pages/publicPage/VerifyToken";
 import Master from "./pages/masters/Master";
 import Degree from "./pages/masters/degree/Degree";
-import AddDegree from "./pages/masters/degree/AddDegree";
 import Reports from "./pages/reports/Reports";
 import ViewReports from "./pages/reports/ViewReports";
 // import AddStudents from "./pages/students/Addstudents";
@@ -58,9 +57,9 @@ function App() {
   return (
     <>
       <Routes>
-           {/*--------------------------------- Public Page --------------------------------- */}
-           <Route path="/verify-token" element={<VerifyToken />} />
-        
+        {/*--------------------------------- Public Page --------------------------------- */}
+        <Route path="/verify-token" element={<VerifyToken />} />
+
         <Route path="/" element={<Login />} />
         <Route element={<SidebarDemo />}>
           <Route path="/dashboard" element={<Dashboard />} />
@@ -79,15 +78,14 @@ function App() {
           <Route path="/university/:id" element={<ViewUniversity />} />
 
           {/*--------------------------------- Degree --------------------------------- */}
-            <Route path="/degree" element={<Degree />} />
-            <Route path="/adddegree" element={<AddDegree />} />
-         {/*--------------------------------- Reports --------------------------------- */}
-                    <Route path="/reports" element={<Reports />} />
-         {/*--------------------------------- Reports --------------------------------- */}
-                    <Route path="/report/:id" element={<ViewReports />} />
+          <Route path="/degree" element={<Degree />} />
+          {/*--------------------------------- Reports --------------------------------- */}
+          <Route path="/reports" element={<Reports />} />
+          {/*--------------------------------- Reports --------------------------------- */}
+          <Route path="/report/:id" element={<ViewReports />} />
 
-           {/*--------------------------------- Master Page --------------------------------- */}
-             <Route path="/master" element={<Master />} />
+          {/*--------------------------------- Master Page --------------------------------- */}
+          <Route path="/master" element={<Master />} />
 
           <Route path="/community" element={<CommunitiesTable />} />
           <Route path="/addcommunity" element={<AddCommunityForm />} />

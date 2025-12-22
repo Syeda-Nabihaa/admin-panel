@@ -33,12 +33,20 @@ export class ReportService {
     );
   }
 
-  //--------------- Ban USerrrrrr -------------------------------
-  async banUser(id, body) {
-    return await BaseService.patch(
-      `${AllApiEndPoints.banUser}/${id}`,
+  async reportUser(id, body){
+     return await BaseService.put(
+      `${AllApiEndPoints.report}/${id}/status`,
       body,
       "Cannnot Add report"
+    );
+  }
+
+  //--------------- Ban USerrrrrr -------------------------------
+  async blockUser(id) {
+    return await BaseService.delete(
+      `${AllApiEndPoints.block}/${id}`,
+
+      "cannot block user"
     );
   }
 }

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Button({ title, onClick }) {
   return (
     <StyledWrapper>
-      <button type="submit" onClick={onClick} className= "bg-linear-to-r from-indigo to-indigo w-full">
+      <button type="submit" onClick={onClick} className= "bg-purple w-full">
         {title}
       </button>
     </StyledWrapper>

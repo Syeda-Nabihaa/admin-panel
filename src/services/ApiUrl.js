@@ -28,7 +28,7 @@ banwords:`${environment.baseUrl}banwords`,
 
 //---------------------- Report -------------------------------------
 report:`${environment.baseUrl}report`,
-//---------------------- Ban user -------------------------------------
-banUser:`${environment.baseUrl}auth/user-status`,
+//---------------------- Block -------------------------------------
+block:`${environment.baseUrl}block`,
 
 }
