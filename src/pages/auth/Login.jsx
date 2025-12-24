@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Helper from "../../helper/Helper";
 import { Button } from "../../components/Button";
 import { Heading, SubText } from "../../components/Typography";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const service = new AuthService();
@@ -33,14 +34,14 @@ export default function Login() {
     setIsLoading(true);
     try {
       const res = await service.login(formData);
-      console.log("ssjss",res);
-      
+      console.log("ssjss", res);
+
       helpers.setToken(res.data.accessToken, res.data.refreshToken);
 
-      alert("Login Successful!");
+      toast("Login successfully");
       navigate("/dashboard");
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
@@ -54,8 +55,8 @@ export default function Login() {
           <div className="mx-auto w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-4">
             <span className="text-white font-bold text-xl">A</span>
           </div>
-          <Heading title="Welcome Back"/>
-          <SubText text="Sign in to your account to continue"/>
+          <Heading title="Welcome Back" />
+          <SubText text="Sign in to your account to continue" />
         </div>
 
         {/* Login Form */}
@@ -103,14 +104,10 @@ export default function Login() {
             </div>
 
             {/* Login Button */}
-            <Button
-              title={isLoading ? "Signing in..." : "Sign in"}
-         
-            />
-
-            
+            <Button title={isLoading ? "Signing in..." : "Sign in"} />
           </form>
         </div>
+        <ToastContainer />
 
         {/* Footer */}
       </div>

@@ -17,8 +17,8 @@ export default function User() {
   async function getAlldata() {
     const data = await request("getAlluser");
     if (data) {
-      setUser(data.users);
-      console.log(data.users);
+      setUser(data);
+      console.log(data);
     }
 
     if (error) {
@@ -54,10 +54,10 @@ export default function User() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800">
-                {Array.isArray(user) && user.length > 0 ? (
+                {user.length > 0 ? (
                   user.map((u) => (
                     <Tr key={u.id}>
-                      <Td text={u.email} />
+                      <Td text={u?.email} />
                       <Td text={u.userDetail[0]?.first_name || "-"} />
                       <Td text={u.userDetail[0]?.last_name ||  "-"}  />
                       <Td text={u.role} />
@@ -93,14 +93,12 @@ export default function User() {
             />
           </svg>
           <h3 className="mt-4 text-lg font-medium text-white">
-            No university found
+            No user found
           </h3>
           <p className="mt-1 text-white">
-            Unable to load university details. Please try again.
+            Unable to load user details. Please try again.
           </p>
-          <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Retry
-          </button>
+          
         </div>
       )}
     </>
